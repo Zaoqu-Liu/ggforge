@@ -1,32 +1,38 @@
 # ggforge
 
-> **Comprehensive Visualization Toolkit for Biomedical Research**
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/Zaoqu-Liu/ggforge/workflows/R-CMD-check/badge.svg)](https://github.com/Zaoqu-Liu/ggforge/actions)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+## Comprehensive Visualization Toolkit for Biomedical Research
 
 ggforge is a comprehensive and elegant visualization framework designed
-specifically for biomedical and bioinformatics research. Built on
-ggplot2 with a modern modular architecture, it streamlines the creation
-of high-quality figures with minimal code while maintaining full
-flexibility for customization.
+for biomedical and bioinformatics research. Built on ggplot2 with a
+modern modular architecture, it provides 40+ plotting functions covering
+statistical graphics, enrichment analysis, single-cell transcriptomics,
+spatial analysis, survival analysis, and genomics visualization.
 
-## ✨ Key Features
+------------------------------------------------------------------------
 
-- 🎨 **40+ Plotting Functions** - Comprehensive coverage of biomedical
-  visualization needs
-- 🧬 **Bioinformatics-Focused** - Specialized functions for enrichment,
-  GSEA, single-cell, genomics
-- 🎯 **Unified API Design** - Consistent interface across all plotting
-  functions
-- 🌈 **Extensive Color Palettes** - Carefully curated color schemes for
-  scientific research
-- 🔧 **Intelligent Type Detection** - Automatic variable type inference
-  for optimal styling
-- 📊 **Multi-Panel Layouts** - Easy creation of complex figure
-  compositions
-- 🎓 **Professional Themes** - Beautiful aesthetics out of the box
+## Documentation
 
-## 📦 Installation
+### Online Resources
 
-You can install the development version of ggforge from GitHub:
+**Complete documentation and interactive tutorials are available at:**
+
+### **<https://zaoqu-liu.github.io/ggforge>**
+
+- **Getting Started Tutorial**: [Introduction to
+  ggforge](https://zaoqu-liu.github.io/ggforge/articles/introduction.html)
+- **Function Reference**: [Complete API
+  Documentation](https://zaoqu-liu.github.io/ggforge/reference/)
+- **GitHub Repository**: <https://github.com/Zaoqu-Liu/ggforge>
+
+------------------------------------------------------------------------
+
+## Installation
 
 ``` r
 # Install from GitHub
@@ -34,25 +40,24 @@ if (!require("devtools")) install.packages("devtools")
 devtools::install_github("Zaoqu-Liu/ggforge")
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ``` r
 library(ggforge)
 library(ggplot2)
 library(dplyr)
-
-# Set seed for reproducibility
 set.seed(8525)
 ```
 
-## 📊 Basic Statistical Plots
+------------------------------------------------------------------------
 
-### Box Plots
+## Examples
 
-Create elegant box plots with automatic aesthetics:
+### Basic Statistical Plots
+
+**Box Plots**
 
 ``` r
-# Create sample data
 data <- data.frame(
   group = rep(c("Control", "Treatment A", "Treatment B"), each = 50),
   value = c(rnorm(50, 10, 2), rnorm(50, 12, 2.5), rnorm(50, 15, 2))
@@ -73,9 +78,7 @@ BoxPlot(
 
 ![](reference/figures/README-boxplot-1.png)
 
-### Violin Plots
-
-Visualize distributions with violin plots:
+**Violin Plots**
 
 ``` r
 ViolinPlot(
@@ -93,12 +96,9 @@ ViolinPlot(
 
 ![](reference/figures/README-violinplot-1.png)
 
-### Scatter Plots
-
-Create high-quality scatter plots with correlation statistics:
+**Scatter Plots**
 
 ``` r
-# Create correlated data
 n <- 200
 scatter_data <- data.frame(
   gene_A = rnorm(n, 100, 20),
@@ -123,9 +123,7 @@ ScatterPlot(
 
 ![](reference/figures/README-scatterplot-1.png)
 
-### Density Plots
-
-Visualize distributions with smooth density curves:
+**Density Plots**
 
 ``` r
 DensityPlot(
@@ -141,9 +139,7 @@ DensityPlot(
 
 ![](reference/figures/README-densityplot-1.png)
 
-### Bar Plots
-
-Create bar charts with error bars:
+**Bar Plots**
 
 ``` r
 BarPlot(
@@ -161,12 +157,9 @@ BarPlot(
 
 ![](reference/figures/README-barplot-1.png)
 
-### Line Plots
-
-Visualize trends over time:
+**Line Plots**
 
 ``` r
-# Create time series data
 time_data <- data.frame(
   time = rep(1:10, 3),
   value = c(
@@ -193,14 +186,13 @@ LinePlot(
 
 ![](reference/figures/README-lineplot-1.png)
 
-## 🧬 Enrichment Analysis Visualization
+------------------------------------------------------------------------
 
-### Enrichment Network
+### Enrichment Analysis
 
-Visualize relationships between enriched terms:
+**Enrichment Network**
 
 ``` r
-# Load example enrichment data
 data("enrich_multidb_example")
 
 EnrichNetwork(
@@ -214,9 +206,7 @@ EnrichNetwork(
 
 ![](reference/figures/README-enrichment-network-1.png)
 
-### Enrichment Map
-
-Create enrichment maps showing term similarity:
+**Enrichment Map**
 
 ``` r
 data("enrich_example")
@@ -232,14 +222,13 @@ EnrichMap(
 
 ![](reference/figures/README-enrichment-map-1.png)
 
-## 📈 GSEA Visualization
+------------------------------------------------------------------------
 
-### GSEA Summary Plot
+### GSEA Visualization
 
-Visualize multiple GSEA results at once:
+**GSEA Summary Plot**
 
 ``` r
-# Load GSEA example data
 data("gsea_example")
 
 GSEASummaryPlot(
@@ -252,9 +241,7 @@ GSEASummaryPlot(
 
 ![](reference/figures/README-gsea-summary-1.png)
 
-### Individual GSEA Plot
-
-Show detailed enrichment curve for specific pathways:
+**GSEA Enrichment Plot**
 
 ``` r
 GSEAPlot(
@@ -266,14 +253,13 @@ GSEAPlot(
 
 ![](reference/figures/README-gsea-plot-1.png)
 
-## 🔬 Single-Cell & Spatial Analysis
+------------------------------------------------------------------------
 
-### Dimensionality Reduction Plots
+### Single-Cell Analysis
 
-Visualize UMAP, t-SNE, or PCA results:
+**Dimensionality Reduction**
 
 ``` r
-# Load dimension reduction example
 data("dim_example")
 
 DimPlot(
@@ -291,12 +277,9 @@ DimPlot(
 
 ![](reference/figures/README-dimplot-1.png)
 
-### Feature Expression on Reduced Dimensions
-
-Overlay gene expression on dimensionality reduction:
+**Feature Expression**
 
 ``` r
-# Create feature data
 dim_example$feature <- rnorm(nrow(dim_example))
 
 FeatureDimPlot(
@@ -312,12 +295,9 @@ FeatureDimPlot(
 
 ![](reference/figures/README-feature-dimplot-1.png)
 
-### RNA Velocity Field
-
-Visualize RNA velocity on dimensionality reduction:
+**RNA Velocity**
 
 ``` r
-# Prepare embedding matrices
 embedding <- as.matrix(dim_example[, c("basis_1", "basis_2")])
 v_embedding <- as.matrix(dim_example[, c("stochasticbasis_1", "stochasticbasis_2")])
 
@@ -331,14 +311,13 @@ VelocityPlot(
 
 ![](reference/figures/README-velocity-1.png)
 
-## 🧪 Genomics Visualization
+------------------------------------------------------------------------
 
-### Volcano Plot
+### Genomics Visualization
 
-Visualize differential expression results:
+**Volcano Plot**
 
 ``` r
-# Create sample DEG data
 deg_data <- data.frame(
   gene = paste0("Gene", 1:500),
   log2FC = rnorm(500, 0, 1.5),
@@ -346,7 +325,6 @@ deg_data <- data.frame(
 )
 deg_data$padj <- p.adjust(deg_data$pvalue, method = "BH")
 
-# Add some significant genes
 sig_up <- sample(1:500, 25)
 sig_down <- sample(1:500, 25)
 deg_data$log2FC[sig_up] <- abs(rnorm(25, 2, 0.5))
@@ -369,12 +347,9 @@ VolcanoPlot(
 
 ![](reference/figures/README-volcano-1.png)
 
-### Manhattan Plot
-
-Visualize GWAS or QTL mapping results:
+**Manhattan Plot**
 
 ``` r
-# Create sample GWAS data
 gwas_data <- data.frame(
   chr = rep(paste0("chr", 1:22), each = 500),
   pos = rep(1:500, 22) * 1e5,
@@ -394,14 +369,13 @@ ManhattanPlot(
 
 ![](reference/figures/README-manhattan-1.png)
 
-## 📉 Survival Analysis
+------------------------------------------------------------------------
 
-### Kaplan-Meier Curve
+### Survival Analysis
 
-Create professional survival curves:
+**Kaplan-Meier Curve**
 
 ``` r
-# Create sample survival data
 surv_data <- data.frame(
   time = rexp(150, 0.01),
   status = sample(0:1, 150, replace = TRUE, prob = c(0.4, 0.6)),
@@ -425,14 +399,13 @@ KMPlot(
 
 ![](reference/figures/README-kmplot-1.png)
 
-## 🌐 Network & Relationship Visualization
+------------------------------------------------------------------------
 
-### Heatmap
+### Network Visualization
 
-Create enhanced heatmaps:
+**Heatmap**
 
 ``` r
-# Create sample matrix
 set.seed(123)
 mat <- matrix(rnorm(100), 10, 10)
 rownames(mat) <- paste0("Gene", 1:10)
@@ -447,12 +420,9 @@ Heatmap(
 
 ![](reference/figures/README-heatmap-1.png)
 
-### Chord Diagram
-
-Visualize relationships between categories:
+**Chord Diagram**
 
 ``` r
-# Create sample interaction data
 chord_data <- data.frame(
   from = c("CD4 T", "CD8 T", "B cell", "NK", "Monocyte"),
   to = c("Fibroblast", "Endothelial", "Fibroblast", "Tumor", "Tumor"),
@@ -471,12 +441,9 @@ ChordPlot(
 
 ![](reference/figures/README-chordplot-1.png)
 
-### Venn Diagram
-
-Visualize set overlaps:
+**Venn Diagram**
 
 ``` r
-# Create sample gene sets
 venn_data <- list(
   SetA = paste0("Gene", 1:100),
   SetB = paste0("Gene", 50:150),
@@ -492,25 +459,23 @@ VennDiagram(
 
 ![](reference/figures/README-venn-1.png)
 
-## 🎨 Color Palettes
+------------------------------------------------------------------------
 
-ggforge includes extensive color palettes from multiple sources:
+### Color Palettes
 
 ``` r
-# Show available palettes (first 20)
 show_palettes(head(names(palette_list), 20))
 #>  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15"
 #> [16] "16" "17" "18" "19" "20"
 ```
 
-## 🔧 Advanced Features
+------------------------------------------------------------------------
 
-### Multi-Panel Layouts with split_by
+### Advanced Features
 
-Automatically split your data and create multi-panel figures:
+**Multi-Panel Layouts**
 
 ``` r
-# Create data with multiple groups
 multi_data <- data.frame(
   x = rep(1:10, 9),
   y = rnorm(90, rep(1:3, each = 30), 0.5),
@@ -533,144 +498,105 @@ LinePlot(
 
 ![](reference/figures/README-split-example-1.png)
 
-## 📚 Complete Function List
+------------------------------------------------------------------------
+
+## Key Features
+
+- **40+ plotting functions** covering comprehensive biomedical
+  visualization needs
+- **Unified API design** with consistent interface across all functions
+- **Intelligent type detection** for automatic variable styling
+- **Extensive color palettes** from RColorBrewer, ggsci, viridis, and
+  custom collections
+- **Multi-panel layouts** with automatic data splitting and combination
+- **Professional themes** optimized for scientific publications
+
+## Function Categories
 
 ### Statistical Plots
 
-- [`ScatterPlot()`](https://zaoqu-liu.github.io/ggforge/reference/ScatterPlot.md) -
-  Scatter plots with regression
-- [`LinePlot()`](https://zaoqu-liu.github.io/ggforge/reference/LinePlot.md) -
-  Line plots and time series
-- [`BarPlot()`](https://zaoqu-liu.github.io/ggforge/reference/BarPlot.md) -
-  Bar charts
-- [`BoxPlot()`](https://zaoqu-liu.github.io/ggforge/reference/BoxPlot.md) -
-  Box plots
-- [`ViolinPlot()`](https://zaoqu-liu.github.io/ggforge/reference/ViolinPlot.md) -
-  Violin plots
-- [`DensityPlot()`](https://zaoqu-liu.github.io/ggforge/reference/densityplot.md) -
-  Density distributions
-- [`JitterPlot()`](https://zaoqu-liu.github.io/ggforge/reference/JitterPlot.md) -
-  Jitter plots
-- [`AreaPlot()`](https://zaoqu-liu.github.io/ggforge/reference/AreaPlot.md) -
-  Area plots
-- [`Histogram()`](https://zaoqu-liu.github.io/ggforge/reference/Histogram.md) -
-  Histograms
-- [`QQPlot()`](https://zaoqu-liu.github.io/ggforge/reference/QQPlot.md) -
-  Q-Q plots
-- [`TrendPlot()`](https://zaoqu-liu.github.io/ggforge/reference/TrendPlot.md) -
-  Trend analysis
-- [`RidgePlot()`](https://zaoqu-liu.github.io/ggforge/reference/RidgePlot.md) -
-  Ridge line plots
-- [`DotPlot()`](https://zaoqu-liu.github.io/ggforge/reference/DotPlot.md) -
-  Dot plots
-- [`LollipopPlot()`](https://zaoqu-liu.github.io/ggforge/reference/LollipopPlot.md) -
-  Lollipop charts
-- [`WaterfallPlot()`](https://zaoqu-liu.github.io/ggforge/reference/SplitBarPlot.md) -
-  Waterfall plots
+[`ScatterPlot()`](https://zaoqu-liu.github.io/ggforge/reference/ScatterPlot.md),
+[`LinePlot()`](https://zaoqu-liu.github.io/ggforge/reference/LinePlot.md),
+[`BarPlot()`](https://zaoqu-liu.github.io/ggforge/reference/BarPlot.md),
+[`BoxPlot()`](https://zaoqu-liu.github.io/ggforge/reference/BoxPlot.md),
+[`ViolinPlot()`](https://zaoqu-liu.github.io/ggforge/reference/ViolinPlot.md),
+[`DensityPlot()`](https://zaoqu-liu.github.io/ggforge/reference/densityplot.md),
+[`JitterPlot()`](https://zaoqu-liu.github.io/ggforge/reference/JitterPlot.md),
+[`AreaPlot()`](https://zaoqu-liu.github.io/ggforge/reference/AreaPlot.md),
+[`Histogram()`](https://zaoqu-liu.github.io/ggforge/reference/Histogram.md),
+[`QQPlot()`](https://zaoqu-liu.github.io/ggforge/reference/QQPlot.md),
+[`TrendPlot()`](https://zaoqu-liu.github.io/ggforge/reference/TrendPlot.md),
+[`RidgePlot()`](https://zaoqu-liu.github.io/ggforge/reference/RidgePlot.md),
+[`DotPlot()`](https://zaoqu-liu.github.io/ggforge/reference/DotPlot.md),
+[`LollipopPlot()`](https://zaoqu-liu.github.io/ggforge/reference/LollipopPlot.md),
+[`WaterfallPlot()`](https://zaoqu-liu.github.io/ggforge/reference/SplitBarPlot.md)
 
 ### Enrichment & Pathway Analysis
 
-- [`EnrichMap()`](https://zaoqu-liu.github.io/ggforge/reference/EnrichMap.md) -
-  Enrichment map visualization
-- [`EnrichNetwork()`](https://zaoqu-liu.github.io/ggforge/reference/EnrichNetwork.md) -
-  Enrichment network graphs
-- [`GSEASummaryPlot()`](https://zaoqu-liu.github.io/ggforge/reference/GSEASummaryPlot.md) -
-  GSEA summary visualization
-- [`GSEAPlot()`](https://zaoqu-liu.github.io/ggforge/reference/GSEAPlot.md) -
-  GSEA enrichment curves
+[`EnrichMap()`](https://zaoqu-liu.github.io/ggforge/reference/EnrichMap.md),
+[`EnrichNetwork()`](https://zaoqu-liu.github.io/ggforge/reference/EnrichNetwork.md),
+[`GSEASummaryPlot()`](https://zaoqu-liu.github.io/ggforge/reference/GSEASummaryPlot.md),
+[`GSEAPlot()`](https://zaoqu-liu.github.io/ggforge/reference/GSEAPlot.md)
 
-### Single-Cell & Spatial
+### Single-Cell & Spatial Analysis
 
-- [`DimPlot()`](https://zaoqu-liu.github.io/ggforge/reference/DimPlot.md) -
-  Dimensionality reduction (UMAP/t-SNE/PCA)
-- [`FeatureDimPlot()`](https://zaoqu-liu.github.io/ggforge/reference/FeatureDimPlot.md) -
-  Feature expression on reduced dimensions
-- [`VelocityPlot()`](https://zaoqu-liu.github.io/ggforge/reference/VelocityPlot.md) -
-  RNA velocity visualization
-- [`SpatImagePlot()`](https://zaoqu-liu.github.io/ggforge/reference/spatialplots.md) -
-  Spatial image plots
-- [`SpatPointsPlot()`](https://zaoqu-liu.github.io/ggforge/reference/spatialplots.md) -
-  Spatial points
-- [`SpatShapesPlot()`](https://zaoqu-liu.github.io/ggforge/reference/spatialplots.md) -
-  Spatial shapes
-- [`SpatMasksPlot()`](https://zaoqu-liu.github.io/ggforge/reference/spatialplots.md) -
-  Spatial masks
+[`DimPlot()`](https://zaoqu-liu.github.io/ggforge/reference/DimPlot.md),
+[`FeatureDimPlot()`](https://zaoqu-liu.github.io/ggforge/reference/FeatureDimPlot.md),
+[`VelocityPlot()`](https://zaoqu-liu.github.io/ggforge/reference/VelocityPlot.md),
+[`SpatImagePlot()`](https://zaoqu-liu.github.io/ggforge/reference/spatialplots.md),
+[`SpatPointsPlot()`](https://zaoqu-liu.github.io/ggforge/reference/spatialplots.md),
+[`SpatShapesPlot()`](https://zaoqu-liu.github.io/ggforge/reference/spatialplots.md),
+[`SpatMasksPlot()`](https://zaoqu-liu.github.io/ggforge/reference/spatialplots.md)
 
 ### Genomics
 
-- [`VolcanoPlot()`](https://zaoqu-liu.github.io/ggforge/reference/VolcanoPlot.md) -
-  Differential expression volcano plots
-- [`ManhattanPlot()`](https://zaoqu-liu.github.io/ggforge/reference/ManhattanPlot.md) -
-  GWAS Manhattan plots
-- [`VennDiagram()`](https://zaoqu-liu.github.io/ggforge/reference/VennDiagram.md) -
-  Venn diagrams
-- [`UpsetPlot()`](https://zaoqu-liu.github.io/ggforge/reference/UpsetPlot.md) -
-  UpSet plots
+[`VolcanoPlot()`](https://zaoqu-liu.github.io/ggforge/reference/VolcanoPlot.md),
+[`ManhattanPlot()`](https://zaoqu-liu.github.io/ggforge/reference/ManhattanPlot.md),
+[`VennDiagram()`](https://zaoqu-liu.github.io/ggforge/reference/VennDiagram.md),
+[`UpsetPlot()`](https://zaoqu-liu.github.io/ggforge/reference/UpsetPlot.md)
 
 ### Survival & Clinical
 
-- [`KMPlot()`](https://zaoqu-liu.github.io/ggforge/reference/KMPlot.md) -
-  Kaplan-Meier survival curves
-- [`ROCCurve()`](https://zaoqu-liu.github.io/ggforge/reference/ROCCurve.md) -
-  ROC curves
+[`KMPlot()`](https://zaoqu-liu.github.io/ggforge/reference/KMPlot.md),
+[`ROCCurve()`](https://zaoqu-liu.github.io/ggforge/reference/ROCCurve.md)
 
 ### Networks & Relationships
 
-- [`CorPlot()`](https://zaoqu-liu.github.io/ggforge/reference/CorPlot.md) -
-  Correlation matrices
-- [`ChordPlot()`](https://zaoqu-liu.github.io/ggforge/reference/chordplot.md) -
-  Chord diagrams
-- [`SankeyPlot()`](https://zaoqu-liu.github.io/ggforge/reference/sankeyplot.md) -
-  Sankey flow diagrams
-- [`Network()`](https://zaoqu-liu.github.io/ggforge/reference/Network.md) -
-  Network graphs
-- [`AlluvialPlot()`](https://zaoqu-liu.github.io/ggforge/reference/sankeyplot.md) -
-  Alluvial diagrams
+[`CorPlot()`](https://zaoqu-liu.github.io/ggforge/reference/CorPlot.md),
+[`ChordPlot()`](https://zaoqu-liu.github.io/ggforge/reference/chordplot.md),
+[`SankeyPlot()`](https://zaoqu-liu.github.io/ggforge/reference/sankeyplot.md),
+[`Network()`](https://zaoqu-liu.github.io/ggforge/reference/Network.md),
+[`AlluvialPlot()`](https://zaoqu-liu.github.io/ggforge/reference/sankeyplot.md)
 
-### Specialized
+### Specialized Plots
 
-- [`Heatmap()`](https://zaoqu-liu.github.io/ggforge/reference/Heatmap.md) -
-  Enhanced heatmaps
-- [`RadarPlot()`](https://zaoqu-liu.github.io/ggforge/reference/radarplot.md)
-  /
-  [`SpiderPlot()`](https://zaoqu-liu.github.io/ggforge/reference/radarplot.md) -
-  Radar charts
-- [`PieChart()`](https://zaoqu-liu.github.io/ggforge/reference/PieChart.md)
-  /
-  [`RingPlot()`](https://zaoqu-liu.github.io/ggforge/reference/RingPlot.md) -
-  Pie and donut charts
-- [`WordCloudPlot()`](https://zaoqu-liu.github.io/ggforge/reference/WordCloudPlot.md) -
-  Word clouds
-- [`RarefactionPlot()`](https://zaoqu-liu.github.io/ggforge/reference/RarefactionPlot.md) -
-  Rarefaction curves
-- [`ClustreePlot()`](https://zaoqu-liu.github.io/ggforge/reference/ClustreePlot.md) -
-  Cluster hierarchy trees
-- [`CircosPlot()`](https://zaoqu-liu.github.io/ggforge/reference/chordplot.md) -
-  Circos plots
-- [`SplitBarPlot()`](https://zaoqu-liu.github.io/ggforge/reference/SplitBarPlot.md) -
-  Split bar plots
+[`Heatmap()`](https://zaoqu-liu.github.io/ggforge/reference/Heatmap.md),
+[`RadarPlot()`](https://zaoqu-liu.github.io/ggforge/reference/radarplot.md),
+[`SpiderPlot()`](https://zaoqu-liu.github.io/ggforge/reference/radarplot.md),
+[`PieChart()`](https://zaoqu-liu.github.io/ggforge/reference/PieChart.md),
+[`RingPlot()`](https://zaoqu-liu.github.io/ggforge/reference/RingPlot.md),
+[`WordCloudPlot()`](https://zaoqu-liu.github.io/ggforge/reference/WordCloudPlot.md),
+[`RarefactionPlot()`](https://zaoqu-liu.github.io/ggforge/reference/RarefactionPlot.md),
+[`ClustreePlot()`](https://zaoqu-liu.github.io/ggforge/reference/ClustreePlot.md),
+[`CircosPlot()`](https://zaoqu-liu.github.io/ggforge/reference/chordplot.md),
+[`SplitBarPlot()`](https://zaoqu-liu.github.io/ggforge/reference/SplitBarPlot.md)
 
-## 💡 Design Philosophy
+------------------------------------------------------------------------
 
-ggforge follows several key principles:
+## Design Philosophy
 
-1.  **Consistency**: All functions share a unified API design
-2.  **Simplicity**: Create complex plots with minimal code
-3.  **Flexibility**: Full control over aesthetics when needed
-4.  **Intelligence**: Automatic type detection and optimal defaults
-5.  **Quality**: High-quality output out of the box
+ggforge follows key principles for scientific visualization:
 
-## 📖 Documentation
+1.  **Consistency** - Unified API design across all plotting functions
+2.  **Simplicity** - Create complex visualizations with minimal code
+3.  **Flexibility** - Full control over aesthetics and customization
+4.  **Intelligence** - Automatic type detection and optimal defaults
+5.  **Quality** - Professional output suitable for scientific
+    publications
 
-- **Function Reference**: Run `?FunctionName` in R
-- **Vignettes**: `browseVignettes("ggforge")`
-- **GitHub**: <https://github.com/Zaoqu-Liu/ggforge>
+------------------------------------------------------------------------
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📝 Citation
+## Citation
 
 If you use ggforge in your research, please cite:
 
@@ -680,35 +606,29 @@ R package version 1.0.0. https://github.com/Zaoqu-Liu/ggforge
 Modified from plotthis by Panwen Wang. https://github.com/pwwang/plotthis
 ```
 
-## 📄 License
+## License
 
-This project is licensed under the GPL-3 License - see the
-[LICENSE.md](https://zaoqu-liu.github.io/ggforge/LICENSE.md) file for
+This project is licensed under the GPL-3 License. See
+[LICENSE.md](https://zaoqu-liu.github.io/ggforge/LICENSE.md) for
 details.
 
-## 👨‍🔬 Author
+## Author
 
 **Zaoqu Liu**
 
 - ORCID: [0000-0002-0452-742X](https://orcid.org/0000-0002-0452-742X)
-- GitHub: [@Zaoqu-Liu](https://github.com/Zaoqu-Liu)
 - Email: <liuzaoqu@163.com>
+- Affiliation: Chinese Academy of Medical Sciences and Peking Union
+  Medical College
 
-*MD candidate and PhD student at Chinese Academy of Medical Sciences and
-Peking Union Medical College*
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 This package is greatly inspired by and modified from
 [plotthis](https://github.com/pwwang/plotthis) by Panwen Wang. We are
 deeply grateful for the original work and design philosophy.
 
-Built on the shoulders of giants: -
-[plotthis](https://github.com/pwwang/plotthis) - Original inspiration
-and foundation - [ggplot2](https://ggplot2.tidyverse.org/) - The grammar
-of graphics - [patchwork](https://patchwork.data-imaginist.com/) -
-Multi-panel composition - And many other excellent R packages
-
-------------------------------------------------------------------------
-
-Made with ❤️ for the biomedical research community
+Additional acknowledgments: -
+[ggplot2](https://ggplot2.tidyverse.org/) - The grammar of graphics -
+[patchwork](https://patchwork.data-imaginist.com/) - Multi-panel
+composition - The R community for their excellent packages and
+contributions
