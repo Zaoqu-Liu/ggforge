@@ -397,6 +397,32 @@ KMPlot(
 
 <img src="man/figures/README-kmplot-1.png" width="100%" />
 
+**Cox Regression Analysis**
+
+``` r
+# Create sample data with multiple covariates
+cox_data <- data.frame(
+  time = rexp(200, 0.01),
+  event = sample(0:1, 200, replace = TRUE, prob = c(0.3, 0.7)),
+  age = rnorm(200, 60, 10),
+  gender = sample(c("Male", "Female"), 200, replace = TRUE),
+  stage = sample(c("I", "II", "III", "IV"), 200, replace = TRUE),
+  treatment = sample(c("A", "B"), 200, replace = TRUE)
+)
+
+CoxPlot(
+  data = cox_data,
+  time = "time",
+  event = "event",
+  vars = c("age", "gender", "stage", "treatment"),
+  plot_type = "forest",
+  palette = "nejm",
+  title = "Cox Proportional Hazards Model"
+)
+```
+
+<img src="man/figures/README-coxplot-1.png" width="100%" />
+
 ------------------------------------------------------------------------
 
 ### Network Visualization
@@ -500,7 +526,7 @@ LinePlot(
 
 ## Key Features
 
-- **40+ plotting functions** covering comprehensive biomedical
+- **41+ plotting functions** covering comprehensive biomedical
   visualization needs
 - **Unified API design** with consistent interface across all functions
 - **Intelligent type detection** for automatic variable styling
@@ -533,7 +559,7 @@ LinePlot(
 
 ### Survival & Clinical
 
-`KMPlot()`, `ROCCurve()`
+`KMPlot()`, `CoxPlot()`, `ROCCurve()`
 
 ### Networks & Relationships
 

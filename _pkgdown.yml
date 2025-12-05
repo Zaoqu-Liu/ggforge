@@ -102,6 +102,7 @@ reference:
     Functions for survival and clinical data analysis
   contents:
   - KMPlot
+  - CoxPlot
   - ROCCurve
 
 - title: Networks & Relationships
