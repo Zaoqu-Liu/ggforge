@@ -1,0 +1,2063 @@
+# ============================================================================
+# ggforge Plot Functions Examples
+# ============================================================================
+# 从所有主要画图函数（@export）的 @examples 文档中自动提取
+
+library(ggforge)
+set.seed(8525)
+
+
+# ============================================================================
+# 1. areaplot.R
+# ============================================================================
+
+data <- data.frame(
+  x = rep(c("A", "B", "C", "D"), 2),
+  y = c(1, 3, 6, 4, 2, 5, 7, 8),
+  group = rep(c("F1", "F2"), each = 4),
+  split = rep(c("X", "Y"), 4)
+)
+AreaPlot(data, x = "x", y = "y", group_by = "group")
+AreaPlot(data,
+  x = "x", y = "y", group_by = "group",
+  scale_y = TRUE
+)
+AreaPlot(data, x = "x", y = "y", split_by = "group")
+AreaPlot(data, x = "x", y = "y", split_by = "group", palette = c(F1 = "Blues", F2 = "Reds"))
+AreaPlot(data,
+  x = "x", y = "y", group_by = "group", split_by = "split",
+  legend.direction = c(X = "horizontal", Y = "vertical"),
+  legend.position = c(X = "top", Y = "right")
+)
+
+
+# ============================================================================
+# 2. barplot.R
+# ============================================================================
+
+# Simple bar plot (counts)
+data <- data.frame(
+  category = c("A", "B", "C", "D", "A", "B")
+)
+BarPlot(data, x = "category")
+
+# Bar plot with values
+data <- data.frame(
+  category = c("A", "B", "C", "D"),
+  value = c(10, 15, 8, 12)
+)
+BarPlot(data, x = "category", y = "value")
+
+# Grouped bar plot (dodged)
+data <- data.frame(
+  category = rep(c("A", "B", "C"), 2),
+  value = c(10, 15, 8, 12, 18, 14),
+  group = rep(c("G1", "G2"), each = 3)
+)
+BarPlot(data, x = "category", y = "value", group_by = "group")
+
+# Stacked bar plot
+BarPlot(data, x = "category", y = "value", group_by = "group", position = "stack")
+
+# With labels and customization
+BarPlot(
+  data,
+  x = "category", y = "value", group_by = "group",
+  label = TRUE, palette = "Set2", flip = TRUE
+)
+
+# With splits (multiple plots)
+data$experiment <- rep(c("Exp1", "Exp2"), 3)
+BarPlot(data, x = "category", y = "value", split_by = "experiment")
+
+# With faceting (single plot, multiple panels)
+BarPlot(data, x = "category", y = "value", facet_by = "experiment")
+
+
+# ============================================================================
+# 3. barplot.R
+# ============================================================================
+
+# Basic split bar plot (diverging bars)
+data <- data.frame(
+  term = c("Item A", "Item B", "Item C", "Item D"),
+  value = c(-10, 20, -15, 25),
+  importance = c(1, 3, 2, 4)
+)
+SplitBarPlot(data, x = "value", y = "term")
+
+# With alpha mapping to show importance
+SplitBarPlot(data, x = "value", y = "term", alpha_by = "importance")
+
+# With custom fill groups
+data$category <- c("Type A", "Type A", "Type B", "Type B")
+SplitBarPlot(data, x = "value", y = "term", fill_by = "category")
+
+# Custom ordering (by value descending for positive, ascending for negative)
+SplitBarPlot(
+  data,
+  x = "value", y = "term",
+  order_y = list("+" = "x_desc", "-" = "x_asc")
+)
+
+# Survey-style diverging bars (e.g., agree/disagree)
+survey_data <- data.frame(
+  question = rep(c(
+    "Q1: Service quality", "Q2: Value for money",
+    "Q3: Overall satisfaction"
+  ), 2),
+  response = c(45, 60, 55, -20, -15, -10),
+  group = rep(c("Positive", "Negative"), each = 3)
+)
+SplitBarPlot(
+  survey_data,
+  x = "response", y = "question",
+  direction_pos_name = "Agree",
+  direction_neg_name = "Disagree",
+  palette = "RdBu"
+)
+
+
+# ============================================================================
+# 4. boxviolinplot.R
+# ============================================================================
+
+# ============================================================
+# Basic Examples
+# ============================================================
+
+# Create sample data
+set.seed(123)
+data <- data.frame(
+  group = rep(LETTERS[1:4], each = 25),
+  value = c(
+    rnorm(25, 10, 2), rnorm(25, 12, 2),
+    rnorm(25, 11, 3), rnorm(25, 14, 2)
+  ),
+  treatment = rep(c("Control", "Treatment"), 50),
+  gender = sample(c("Male", "Female"), 100, replace = TRUE)
+)
+
+# Simple box plot
+BoxPlot(data, x = "group", y = "value")
+
+# Box plot with custom labels
+BoxPlot(data,
+  x = "group", y = "value",
+  title = "Distribution by Group",
+  xlab = "Experimental Group",
+  ylab = "Measurement Value"
+)
+
+# ============================================================
+# Grouped Box Plots
+# ============================================================
+
+# Side-by-side (dodged) box plots by treatment
+BoxPlot(data, x = "group", y = "value", group_by = "treatment")
+
+# With custom group legend name
+BoxPlot(data,
+  x = "group", y = "value",
+  group_by = "treatment",
+  group_name = "Treatment Group"
+)
+
+# With custom color palette
+BoxPlot(data,
+  x = "group", y = "value",
+  group_by = "treatment",
+  palette = "Set1"
+)
+
+# ============================================================
+# Adding Data Points
+# ============================================================
+
+# Add jittered points to show individual observations
+BoxPlot(data, x = "group", y = "value", add_point = TRUE)
+
+# Customize point appearance
+BoxPlot(data,
+  x = "group", y = "value",
+  add_point = TRUE,
+  pt_color = "darkblue",
+  pt_size = 1.5,
+  pt_alpha = 0.6
+)
+
+# With grouped data
+BoxPlot(data,
+  x = "group", y = "value",
+  group_by = "treatment",
+  add_point = TRUE,
+  pt_alpha = 0.5
+)
+
+# ============================================================
+# Highlighting Specific Points
+# ============================================================
+
+# Highlight outliers or specific observations
+BoxPlot(data,
+  x = "group", y = "value",
+  add_point = TRUE,
+  highlight = "value > 15",
+  highlight_color = "red",
+  highlight_size = 3
+)
+
+# Highlight by row indices
+BoxPlot(data,
+  x = "group", y = "value",
+  add_point = TRUE,
+  highlight = c(1, 5, 10, 15),
+  highlight_color = "orange"
+)
+
+# ============================================================
+# Statistical Comparisons
+# ============================================================
+
+# Compare specific pairs
+BoxPlot(data,
+  x = "group", y = "value",
+  comparisons = list(c("A", "B"), c("A", "D"))
+)
+
+# Compare all pairs
+BoxPlot(data,
+  x = "group", y = "value",
+  comparisons = TRUE
+)
+
+# Use t-test instead of Wilcoxon
+BoxPlot(data,
+  x = "group", y = "value",
+  comparisons = list(c("A", "D")),
+  pairwise_method = "t.test"
+)
+
+# Show significance symbols instead of p-values
+BoxPlot(data,
+  x = "group", y = "value",
+  comparisons = TRUE,
+  sig_label = "p.signif"
+)
+
+# Hide non-significant comparisons
+BoxPlot(data,
+  x = "group", y = "value",
+  comparisons = TRUE,
+  hide_ns = TRUE
+)
+
+# With grouped data - compare groups within each x category
+BoxPlot(data,
+  x = "group", y = "value",
+  group_by = "treatment",
+  comparisons = TRUE
+)
+
+# Multiple group comparison (Kruskal-Wallis)
+BoxPlot(data,
+  x = "group", y = "value",
+  multiplegroup_comparisons = TRUE
+)
+
+# ============================================================
+# Paired Data Analysis
+# ============================================================
+
+# Create paired data (before/after measurements)
+paired_data <- data.frame(
+  time = factor(rep(c("Before", "After"), each = 20)),
+  subject = factor(rep(1:20, 2)),
+  score = c(rnorm(20, 50, 10), rnorm(20, 55, 10))
+)
+
+# Paired box plot with connecting lines
+BoxPlot(paired_data,
+  x = "time", y = "score",
+  paired_by = "subject",
+  add_point = TRUE
+)
+
+# With paired statistical test
+BoxPlot(paired_data,
+  x = "time", y = "score",
+  paired_by = "subject",
+  comparisons = list(c("Before", "After")),
+  pairwise_method = "t.test"
+)
+
+# ============================================================
+# Sorting and Orientation
+# ============================================================
+
+# Sort by mean value (ascending)
+BoxPlot(data, x = "group", y = "value", sort_x = "mean_asc")
+
+# Sort by median value (descending)
+BoxPlot(data, x = "group", y = "value", sort_x = "median_desc")
+
+# Horizontal box plot
+BoxPlot(data, x = "group", y = "value", flip = TRUE)
+
+# ============================================================
+# Axis Customization
+# ============================================================
+
+# Set y-axis limits
+BoxPlot(data,
+  x = "group", y = "value",
+  y_min = 5, y_max = 20
+)
+
+# Use quantiles for y-axis limits (exclude extreme values)
+BoxPlot(data,
+  x = "group", y = "value",
+  y_min = "q5", y_max = "q95"
+)
+
+# Log-transform y-axis
+pos_data <- data
+pos_data$value <- abs(pos_data$value) + 1
+BoxPlot(pos_data,
+  x = "group", y = "value",
+  y_trans = "log10"
+)
+
+# ============================================================
+# Visual Enhancements
+# ============================================================
+
+# Add trend line connecting medians
+BoxPlot(data, x = "group", y = "value", add_trend = TRUE)
+
+# Add reference line
+BoxPlot(data,
+  x = "group", y = "value",
+  add_line = 12,
+  line_color = "red",
+  line_type = 2
+)
+
+# Add alternating background
+BoxPlot(data,
+  x = "group", y = "value",
+  add_bg = TRUE,
+  bg_alpha = 0.1
+)
+
+# Add mean indicator
+BoxPlot(data,
+  x = "group", y = "value",
+  add_stat = mean,
+  stat_name = "Mean",
+  stat_color = "red",
+  stat_shape = 18
+)
+
+# ============================================================
+# Faceting
+# ============================================================
+
+# Facet by another variable
+BoxPlot(data,
+  x = "group", y = "value",
+  facet_by = "gender"
+)
+
+# Control facet layout
+BoxPlot(data,
+  x = "group", y = "value",
+  facet_by = "gender",
+  facet_ncol = 2
+)
+
+# Free y-axis scales per facet
+BoxPlot(data,
+  x = "group", y = "value",
+  facet_by = "gender",
+  facet_scales = "free_y"
+)
+
+# ============================================================
+# Fill Modes
+# ============================================================
+
+# Fill by x-axis category (default when no group_by)
+BoxPlot(data, x = "group", y = "value", fill_mode = "x")
+
+# Fill by mean value (gradient)
+BoxPlot(data,
+  x = "group", y = "value",
+  fill_mode = "mean",
+  palette = "RdYlBu"
+)
+
+# Fill by median value (gradient)
+BoxPlot(data,
+  x = "group", y = "value",
+  fill_mode = "median",
+  palette = "viridis"
+)
+
+# ============================================================
+# Wide Format Data
+# ============================================================
+
+# Wide format: each column is a group
+wide_data <- data.frame(
+  GroupA = rnorm(30, 10, 2),
+  GroupB = rnorm(30, 12, 2),
+  GroupC = rnorm(30, 11, 3)
+)
+
+BoxPlot(wide_data,
+  x = c("GroupA", "GroupB", "GroupC"),
+  in_form = "wide"
+)
+
+# ============================================================
+# Splitting into Multiple Plots
+# ============================================================
+
+# Create separate plots by a variable
+BoxPlot(data,
+  x = "group", y = "value",
+  split_by = "gender",
+  combine = TRUE,
+  ncol = 2
+)
+
+# ============================================================
+# Theme and Style Customization
+# ============================================================
+
+# Custom color palette
+BoxPlot(data,
+  x = "group", y = "value",
+  palette = "Dark2"
+)
+
+# Custom colors
+BoxPlot(data,
+  x = "group", y = "value",
+  palcolor = c(
+    "A" = "#E41A1C", "B" = "#377EB8",
+    "C" = "#4DAF4A", "D" = "#984EA3"
+  )
+)
+
+# Legend position
+BoxPlot(data,
+  x = "group", y = "value",
+  group_by = "treatment",
+  legend.position = "bottom",
+  legend.direction = "horizontal"
+)
+
+# Hide legend
+BoxPlot(data,
+  x = "group", y = "value",
+  group_by = "treatment",
+  legend.position = "none"
+)
+
+
+# ============================================================================
+# 5. boxviolinplot.R
+# ============================================================================
+
+# ============================================================
+# Basic Examples
+# ============================================================
+
+# Create sample data with different distributions
+set.seed(456)
+data <- data.frame(
+  category = rep(c("Normal", "Bimodal", "Skewed", "Uniform"), each = 100),
+  value = c(
+    rnorm(100, 50, 10), # Normal
+    c(rnorm(50, 30, 5), rnorm(50, 70, 5)), # Bimodal
+    rexp(100, 0.1), # Skewed
+    runif(100, 20, 80) # Uniform
+  ),
+  group = rep(c("A", "B"), 200)
+)
+
+# Simple violin plot
+ViolinPlot(data, x = "category", y = "value")
+
+# With title and labels
+ViolinPlot(data,
+  x = "category", y = "value",
+  title = "Distribution Shapes Comparison",
+  xlab = "Distribution Type",
+  ylab = "Value"
+)
+
+# ============================================================
+# Violin with Box Plot Overlay
+# ============================================================
+
+# Add box plot inside violin (shows quartiles)
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_box = TRUE
+)
+
+# Customize box overlay
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_box = TRUE,
+  box_color = "white",
+  box_width = 0.15,
+  box_ptsize = 3
+)
+
+# ============================================================
+# Adding Data Points
+# ============================================================
+
+# Add jittered points to show individual observations
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_point = TRUE
+)
+
+# Combine box overlay with points
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_box = TRUE,
+  add_point = TRUE,
+  pt_alpha = 0.3
+)
+
+# Customize point appearance
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_point = TRUE,
+  pt_color = "navy",
+  pt_size = 0.8,
+  pt_alpha = 0.5,
+  jitter_width = 0.3
+)
+
+# ============================================================
+# Grouped Violin Plots
+# ============================================================
+
+# Side-by-side violins by group
+ViolinPlot(data,
+  x = "category", y = "value",
+  group_by = "group"
+)
+
+# With box overlay
+ViolinPlot(data,
+  x = "category", y = "value",
+  group_by = "group",
+  add_box = TRUE
+)
+
+# Custom palette
+ViolinPlot(data,
+  x = "category", y = "value",
+  group_by = "group",
+  palette = "Set2",
+  add_box = TRUE
+)
+
+# ============================================================
+# Statistical Comparisons
+# ============================================================
+
+# Compare specific distributions
+ViolinPlot(data,
+  x = "category", y = "value",
+  comparisons = list(
+    c("Normal", "Bimodal"),
+    c("Normal", "Skewed")
+  )
+)
+
+# All pairwise comparisons
+ViolinPlot(data,
+  x = "category", y = "value",
+  comparisons = TRUE,
+  sig_label = "p.signif"
+)
+
+# Grouped comparisons
+ViolinPlot(data,
+  x = "category", y = "value",
+  group_by = "group",
+  comparisons = TRUE
+)
+
+# ============================================================
+# Paired Data Analysis
+# ============================================================
+
+# Create paired data
+paired_data <- data.frame(
+  condition = factor(rep(c("Baseline", "Treatment"), each = 30)),
+  patient = factor(rep(1:30, 2)),
+  response = c(rnorm(30, 100, 20), rnorm(30, 120, 20))
+)
+
+# Paired violin with connecting lines
+ViolinPlot(paired_data,
+  x = "condition", y = "response",
+  paired_by = "patient",
+  add_box = TRUE
+)
+
+# With paired t-test
+ViolinPlot(paired_data,
+  x = "condition", y = "response",
+  paired_by = "patient",
+  comparisons = list(c("Baseline", "Treatment")),
+  pairwise_method = "t.test"
+)
+
+# ============================================================
+# Highlighting and Visual Enhancements
+# ============================================================
+
+# Highlight extreme values
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_point = TRUE,
+  highlight = "value > 80 | value < 10",
+  highlight_color = "red",
+  highlight_size = 2
+)
+
+# Add trend line
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_trend = TRUE,
+  trend_linewidth = 1.5
+)
+
+# Add reference line
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_line = 50,
+  line_color = "darkgreen",
+  line_type = 1
+)
+
+# Add mean indicator
+ViolinPlot(data,
+  x = "category", y = "value",
+  add_stat = mean,
+  stat_name = "Mean",
+  stat_color = "red",
+  stat_shape = 18,
+  stat_size = 3
+)
+
+# ============================================================
+# Fill Modes
+# ============================================================
+
+# Fill by x category
+ViolinPlot(data,
+  x = "category", y = "value",
+  fill_mode = "x",
+  palette = "Pastel1"
+)
+
+# Fill by mean (gradient coloring)
+ViolinPlot(data,
+  x = "category", y = "value",
+  fill_mode = "mean",
+  palette = "RdYlGn"
+)
+
+# Fill by median with reversed gradient
+ViolinPlot(data,
+  x = "category", y = "value",
+  fill_mode = "median",
+  palette = "Blues",
+  fill_reverse = TRUE
+)
+
+# ============================================================
+# Sorting and Orientation
+# ============================================================
+
+# Sort by mean value
+ViolinPlot(data,
+  x = "category", y = "value",
+  sort_x = "mean_desc",
+  add_box = TRUE
+)
+
+# Horizontal violin plot
+ViolinPlot(data,
+  x = "category", y = "value",
+  flip = TRUE,
+  add_box = TRUE
+)
+
+# ============================================================
+# Faceting
+# ============================================================
+
+# Add faceting variable
+data$experiment <- sample(c("Exp1", "Exp2"), nrow(data), replace = TRUE)
+
+# Facet by experiment
+ViolinPlot(data,
+  x = "category", y = "value",
+  facet_by = "experiment",
+  add_box = TRUE
+)
+
+# Free scales
+ViolinPlot(data,
+  x = "category", y = "value",
+  facet_by = "experiment",
+  facet_scales = "free_y"
+)
+
+# ============================================================
+# Wide Format Data
+# ============================================================
+
+# Wide format input
+wide_data <- data.frame(
+  Control = rnorm(50, 100, 15),
+  LowDose = rnorm(50, 110, 15),
+  HighDose = rnorm(50, 130, 20)
+)
+
+ViolinPlot(wide_data,
+  x = c("Control", "LowDose", "HighDose"),
+  in_form = "wide",
+  add_box = TRUE,
+  xlab = "Treatment",
+  ylab = "Response"
+)
+
+# ============================================================
+# Complex Example: Publication-Ready Plot
+# ============================================================
+
+# Gene expression data example
+expr_data <- data.frame(
+  gene = rep(c("BRCA1", "TP53", "EGFR", "MYC"), each = 40),
+  expression = c(
+    rnorm(40, 8, 1.5),
+    rnorm(40, 6, 2),
+    rnorm(40, 10, 1),
+    rnorm(40, 12, 2.5)
+  ),
+  tissue = rep(rep(c("Normal", "Tumor"), each = 20), 4)
+)
+
+ViolinPlot(expr_data,
+  x = "gene",
+  y = "expression",
+  group_by = "tissue",
+  add_box = TRUE,
+  add_point = TRUE,
+  pt_alpha = 0.4,
+  comparisons = TRUE,
+  sig_label = "p.signif",
+  hide_ns = TRUE,
+  palette = c("Normal" = "#4DAF4A", "Tumor" = "#E41A1C"),
+  title = "Gene Expression by Tissue Type",
+  xlab = "Gene",
+  ylab = "Expression (log2)",
+  legend.position = "bottom"
+)
+
+
+# ============================================================================
+# 6. chordplot.R
+# ============================================================================
+
+set.seed(8525)
+data <- data.frame(
+  nodes1 = sample(c("Source1", "Source2", "Source3"), 10, replace = TRUE),
+  nodes2 = sample(letters[1:3], 10, replace = TRUE),
+  y = sample(1:5, 10, replace = TRUE)
+)
+
+# Basic chord plot
+ChordPlot(data, from = "nodes1", to = "nodes2")
+
+# With rotated labels and colored by target
+ChordPlot(data,
+  from = "nodes1", to = "nodes2",
+  links_color = "to", labels_rot = TRUE
+)
+
+# With values
+ChordPlot(data, from = "nodes1", to = "nodes2", y = "y")
+
+# Split by variable
+ChordPlot(data, from = "nodes1", to = "nodes2", split_by = "y")
+
+# With custom palettes per split
+ChordPlot(data,
+  from = "nodes1", to = "nodes2", split_by = "y",
+  palette = c("1" = "Reds", "2" = "Blues", "3" = "Greens")
+)
+
+# Flip source and target
+ChordPlot(data, from = "nodes1", to = "nodes2", flip = TRUE)
+
+
+# ============================================================================
+# 7. clustreeplot.R
+# ============================================================================
+
+set.seed(8525)
+N <- 100
+data <- data.frame(
+  p.0.4 = sample(LETTERS[1:5], N, replace = TRUE),
+  p.0.5 = sample(LETTERS[1:6], N, replace = TRUE),
+  p.0.6 = sample(LETTERS[1:7], N, replace = TRUE),
+  p.0.7 = sample(LETTERS[1:8], N, replace = TRUE),
+  p.0.8 = sample(LETTERS[1:9], N, replace = TRUE),
+  p.0.9 = sample(LETTERS[1:10], N, replace = TRUE),
+  p.1 = sample(LETTERS[1:30], N, replace = TRUE),
+  split = sample(1:2, N, replace = TRUE)
+)
+
+ClustreePlot(data, prefix = "p")
+ClustreePlot(data, prefix = "p", flip = TRUE)
+ClustreePlot(data, prefix = "p", split_by = "split")
+ClustreePlot(data,
+  prefix = "p", split_by = "split",
+  palette = c("1" = "Set1", "2" = "Paired")
+)
+
+
+# ============================================================================
+# 8. corplot.R
+# ============================================================================
+
+# Basic correlation plot with grouping
+data(iris)
+CorPlot(iris, x = "Sepal.Length", y = "Sepal.Width", group_by = "Species")
+
+# With custom annotations and positioning
+CorPlot(iris,
+  x = "Sepal.Length", y = "Sepal.Width",
+  group_by = "Species",
+  anno_items = c("n", "eq", "r2", "pearson"),
+  anno_position = "bottomright"
+)
+
+# With highlighting specific points
+CorPlot(iris,
+  x = "Sepal.Length", y = "Sepal.Width",
+  group_by = "Species",
+  highlight = 'Species == "setosa"',
+  highlight_color = "red",
+  highlight_size = 3,
+  highlight_stroke = 1.5
+)
+
+# With faceting by groups
+CorPlot(iris,
+  x = "Sepal.Length", y = "Sepal.Width",
+  facet_by = "Species",
+  facet_scales = "free",
+  add_smooth = TRUE,
+  smooth_color = "blue"
+)
+
+# With splitting and custom palettes
+CorPlot(iris,
+  x = "Sepal.Length", y = "Sepal.Width",
+  split_by = "Species",
+  palette = c(setosa = "Set1", versicolor = "Dark2", virginica = "Paired"),
+  combine = TRUE
+)
+
+# For large datasets, use raster mode
+CorPlot(large_data,
+  x = "x_var", y = "y_var",
+  raster = TRUE,
+  raster_dpi = c(1024, 1024),
+  pt_size = 1
+)
+
+
+# ============================================================================
+# 9. densityplot.R
+# ============================================================================
+
+set.seed(8525)
+data <- data.frame(
+  x = c(rnorm(500, -1), rnorm(500, 1)),
+  group = rep(c("A", "B"), each = 500),
+  facet = sample(c("F1", "F2"), 1000, replace = TRUE)
+)
+
+DensityPlot(data, x = "x")
+DensityPlot(data, x = "x", group_by = "group")
+DensityPlot(data, x = "x", group_by = "group", facet_by = "facet")
+DensityPlot(data, x = "x", split_by = "facet", add_bars = TRUE)
+
+
+# ============================================================================
+# 10. densityplot.R
+# ============================================================================
+
+set.seed(8525)
+data <- data.frame(
+  x = sample(setdiff(1:100, c(30:36, 50:55, 70:77)), 1000, replace = TRUE),
+  group = factor(rep(c("A", "B"), each = 500), levels = c("A", "B")),
+  facet = sample(c("F1", "F2"), 1000, replace = TRUE)
+)
+
+Histogram(data, x = "x")
+Histogram(data, x = "x", group_by = "group")
+Histogram(data, x = "x", split_by = "facet", add_bars = TRUE)
+Histogram(data, x = "x", group_by = "group", add_trend = TRUE)
+
+
+# ============================================================================
+# 11. densityplot.R
+# ============================================================================
+
+set.seed(8525)
+data <- data.frame(
+  x = c(rnorm(250, -1), rnorm(250, 1)),
+  group = rep(LETTERS[1:5], each = 100)
+)
+RidgePlot(data, x = "x") # fallback to density plot
+RidgePlot(data, x = "x", add_vline = 0, vline_color = "black")
+RidgePlot(data, x = "x", group_by = "group")
+RidgePlot(data, x = "x", group_by = "group", reverse = TRUE)
+RidgePlot(data, x = "x", group_by = "group", add_vline = TRUE, vline_color = TRUE)
+
+# wide form
+data_wide <- data.frame(
+  A = rnorm(100),
+  B = rnorm(100),
+  C = rnorm(100),
+  D = rnorm(100),
+  E = rnorm(100),
+  group = sample(letters[1:4], 100, replace = TRUE)
+)
+RidgePlot(data_wide, group_by = LETTERS[1:5], in_form = "wide")
+RidgePlot(data_wide, group_by = LETTERS[1:5], in_form = "wide", facet_by = "group")
+
+
+# ============================================================================
+# 12. dimplot.R
+# ============================================================================
+
+# Basic usage
+data <- ggforge::dim_example
+data$clusters
+colnames(data)
+DimPlot(data, dims = c("basis_1", "basis_2"), group_by = "clusters")
+
+# With faceting
+DimPlot(data, dims = 1:2, group_by = "clusters", facet_by = "group")
+
+# With splitting
+DimPlot(data, dims = 1:2, group_by = "clusters", split_by = "group")
+
+
+# ============================================================================
+# 13. dimplot.R
+# ============================================================================
+
+# Single feature
+FeatureDimPlot(data, features = "gene1", dims = 1:2)
+
+# Multiple features
+FeatureDimPlot(data, features = c("gene1", "gene2"), dims = 1:2)
+
+# With splits
+FeatureDimPlot(data, features = "gene1", split_by = "condition")
+
+
+# ============================================================================
+# 14. dotplot.R
+# ============================================================================
+
+mtcars <- datasets::mtcars
+mtcars$carb <- factor(mtcars$carb)
+mtcars$gear <- factor(mtcars$gear)
+DotPlot(mtcars,
+  x = "carb", y = "gear", size_by = "wt",
+  fill_by = "mpg", fill_cutoff = 18
+)
+DotPlot(mtcars,
+  x = "carb", y = "gear", size_by = "wt",
+  fill_by = "mpg", fill_cutoff = 18, add_bg = TRUE
+)
+# Scatter plot (both axes numeric)
+DotPlot(mtcars,
+  x = "qsec", y = "drat", size_by = "wt",
+  fill_by = "mpg", fill_cutoff = 18
+)
+
+
+# ============================================================================
+# 15. dotplot.R
+# ============================================================================
+
+mtcars <- datasets::mtcars
+LollipopPlot(mtcars,
+  x = "qsec", y = "gear", size_by = "wt",
+  fill_by = "mpg"
+)
+LollipopPlot(mtcars,
+  x = "qsec", y = "gear", size_by = "wt",
+  fill_by = "mpg", fill_cutoff = 18
+)
+
+
+# ============================================================================
+# 16. enrich.R
+# ============================================================================
+
+data(enrich_example)
+EnrichMap(enrich_example)
+EnrichMap(enrich_example, label = "feature")
+EnrichMap(enrich_example, show_keyword = TRUE, label = "term")
+EnrichMap(enrich_example, show_keyword = TRUE, label = "feature")
+
+data(enrich_multidb_example)
+EnrichMap(enrich_multidb_example, split_by = "Database")
+EnrichMap(enrich_multidb_example,
+  split_by = "Database",
+  palette = list(DB1 = "Paired", DB2 = "Set1")
+)
+
+
+# ============================================================================
+# 17. enrich.R
+# ============================================================================
+
+data(enrich_example)
+EnrichNetwork(enrich_example, top_term = 5)
+
+
+# ============================================================================
+# 18. gsea.R
+# ============================================================================
+
+data(gsea_example)
+
+# Basic usage
+GSEASummaryPlot(gsea_example)
+
+# Use running score instead of prerank
+GSEASummaryPlot(gsea_example, line_by = "running_score")
+
+# Adjust significance cutoff
+GSEASummaryPlot(gsea_example, cutoff = 0.01)
+
+# Show more terms
+GSEASummaryPlot(gsea_example, top_term = 15)
+
+# Customize color palette
+GSEASummaryPlot(gsea_example, palette = "RdYlBu",in_form = 'dose')
+
+# Adjust character width for long pathway names
+GSEASummaryPlot(gsea_example, character_width = 70,title = 'sssss')
+
+
+# ============================================================================
+# 19. gsea.R
+# ============================================================================
+
+data(gsea_example)
+
+# Plot single gene set
+GSEAPlot(gsea_example, gene_sets = attr(gsea_example, "gene_sets")[1])
+
+# Plot multiple gene sets
+GSEAPlot(gsea_example, gene_sets = attr(gsea_example, "gene_sets")[1:4])
+
+# Label core genes
+GSEAPlot(
+  gsea_example,
+  gene_sets = attr(gsea_example, "gene_sets")[1],
+  n_coregenes = 5
+)
+
+# Customize line appearance
+GSEAPlot(
+  gsea_example,
+  gene_sets = attr(gsea_example, "gene_sets")[1],
+  line_width = 2,
+  line_color = "#FF6B6B"
+)
+
+# Return separate plots instead of combined
+plots <- GSEAPlot(
+  gsea_example,
+  gene_sets = attr(gsea_example, "gene_sets")[1:3],
+  combine = FALSE
+)
+
+
+# ============================================================================
+# 20. heatmap.R
+# ============================================================================
+
+set.seed(8525)
+
+matrix_data <- matrix(rnorm(60), nrow = 6, ncol = 10)
+rownames(matrix_data) <- paste0("R", 1:6)
+colnames(matrix_data) <- paste0("C", 1:10)
+Heatmap(matrix_data,
+    palette = "viridis", values_by = "z-score",
+    show_row_names = TRUE, show_column_names = TRUE,
+    rows_name = "Features", row_names_side = "left",
+    columns_name = "Samples"
+  )
+Heatmap(matrix_data,
+        palette = "viridis", values_by = "z-score",
+        show_row_names = TRUE, show_column_names = TRUE,
+        rows_name = "Features", row_names_side = "left",
+        columns_name = "Samples", flip = TRUE
+)
+
+# add annotations to the heatmap
+rows_data <- data.frame(
+  rows = paste0("R", 1:6),
+  group = sample(c("X", "Y", "Z"), 6, replace = TRUE)
+)
+Heatmap(matrix_data,
+        rows_data = rows_data,
+        row_annotation = list(Group = "group"),
+        row_annotation_type = list(Group = "simple"),
+        row_annotation_palette = list(Group = "Spectral")
+)
+
+Heatmap(matrix_data,
+        rows_data = rows_data,
+        rows_split_by = "group"
+)
+
+Heatmap(matrix_data,
+        rows_data = rows_data,
+        rows_split_by = "group", cell_type = "label",
+        label = function(x) {
+          ifelse(
+            x > 0, scales::number(x, accuracy = 0.01), NA
+          )
+        }
+)
+
+pvalues <- matrix(runif(60, 0, 0.5), nrow = 6, ncol = 10)
+Heatmap(matrix_data,
+        rows_data = rows_data,
+        rows_split_by = "group", cell_type = "label",
+        label = function(x, i, j) {
+          pv <- ComplexHeatmap::pindex(pvalues, i, j)
+          ifelse(pv < 0.01, "***",
+                 ifelse(pv < 0.05, "**",
+                        ifelse(pv < 0.1, "*", NA)
+                 )
+          )
+        }
+)
+# quickly simulate a GO board
+go <- matrix(sample(c(0, 1, NA), 81, replace = TRUE), ncol = 9)
+
+Heatmap(
+  go,
+  # Do not cluster rows and columns and hide the annotations
+  cluster_rows = FALSE, cluster_columns = FALSE,
+  row_name_annotation = FALSE, column_name_annotation = FALSE,
+  show_row_names = FALSE, show_column_names = FALSE,
+  # Set the legend items
+  values_by = "Players", legend_discrete = TRUE,
+  legend_items = c("Player 1" = 0, "Player 2" = 1),
+  # Set the pawns
+  cell_type = "dot", dot_size = function(x) ifelse(is.na(x), 0, 10),
+  dot_size_name = NULL, # hide the dot size legend
+  palcolor = c("white", "black"),
+  # Set the board
+  add_reticle = TRUE,
+  # Set the size of the board
+  width = ggplot2::unit(105, "mm"), height = ggplot2::unit(105, "mm")
+)
+Heatmap(matrix_data,
+        # Use the "name." prefix
+        column_annotation_params = list(name.columns = list(height = 5)),
+        row_annotation_params = list(name.rows = list(width = 5))
+)
+
+# Use long form data
+N <- 500
+data <- data.frame(
+  value = rnorm(N),
+  c = sample(letters[1:8], N, replace = TRUE),
+  r = sample(LETTERS[1:5], N, replace = TRUE),
+  p = sample(c("x", "y"), N, replace = TRUE),
+  q = sample(c("X", "Y", "Z"), N, replace = TRUE),
+  a = as.character(sample(1:5, N, replace = TRUE)),
+  p1 = runif(N),
+  p2 = runif(N)
+)
+Heatmap(data,
+        rows_by = "r", columns_by = "c", values_by = "value",
+        rows_split_by = "p", columns_split_by = "q", show_column_names = TRUE
+)
+
+# split into multiple heatmaps
+Heatmap(data,
+        values_by = "value", columns_by = "c", rows_by = "r", split_by = "p",
+        upper_cutoff = 2, lower_cutoff = -2, legend.position = c("none", "right"),
+        design = "AAAAAA#BBBBBBB"
+)
+
+Heatmap(data,
+        values_by = "value", rows_by = "r", columns_by = "c",
+        cell_type = "bars"
+)
+
+Heatmap(data,
+        values_by = "value", rows_by = "r", columns_by = "c",
+        cell_type = "dot", dot_size = length, dot_size_name = "data points",
+        add_bg = TRUE, add_reticle = TRUE
+)
+
+# ============================================================================
+# 21. jitterplot.R
+# ============================================================================
+
+set.seed(8525)
+n <- 200
+x <- sample(LETTERS[1:5], n, replace = TRUE)
+group <- sample(c("G1", "G2"), n, replace = TRUE)
+size <- rexp(n, rate = 1)
+id <- paste0("pt", seq_len(n))
+y <- rnorm(n, mean = ifelse(group == "G1", 0.5, -0.5)) +
+  as.numeric(factor(x, levels = LETTERS[1:5])) / 10
+df <- data.frame(
+  x = factor(x, levels = LETTERS[1:5]),
+  y = y,
+  group = group,
+  size = size,
+  id = id
+)
+
+# Basic
+JitterPlot(df, x = "x", y = "y")
+
+# Map size with transform; legend shows original values
+JitterPlot(df,
+  x = "x", y = "y", size_by = "size", size_name = "Abundance",
+  size_trans = sqrt, order_by = "-y^2"
+)
+
+# Dodge by group and add a horizontal line
+JitterPlot(df,
+  x = "x", y = "y", group_by = "group",
+  add_hline = 0, hline_type = "dashed", hline_color = "red2"
+)
+
+# Label top points by distance (y^2 + size^2)
+JitterPlot(df, x = "x", y = "y", size_by = "size", label_by = "id", nlabel = 3)
+
+# Flip axes
+JitterPlot(df, x = "x", y = "y", flip = TRUE)
+
+
+# ============================================================================
+# 22. lineplot.R
+# ============================================================================
+
+# Basic line plot
+data <- data.frame(
+  time = rep(c("T1", "T2", "T3", "T4"), 2),
+  value = c(10, 15, 13, 20, 8, 12, 11, 18),
+  group = rep(c("Control", "Treatment"), each = 4)
+)
+LinePlot(data, x = "time", y = "value")
+
+# Grouped line plot
+LinePlot(data, x = "time", y = "value", group_by = "group")
+
+# With background stripes
+LinePlot(data, x = "time", y = "value", group_by = "group", add_bg = TRUE)
+
+# With error bars
+data$sd <- c(2, 2.5, 2, 3, 1.5, 2, 1.8, 2.5)
+LinePlot(
+  data,
+  x = "time",
+  y = "value",
+  group_by = "group",
+  add_errorbars = TRUE,
+  errorbar_sd = "sd"
+)
+
+# With horizontal reference line
+LinePlot(
+  data,
+  x = "time",
+  y = "value",
+  group_by = "group",
+  add_hline = 15,
+  hline_type = "dashed"
+)
+
+# Split by another variable
+data$batch <- rep(c("Batch1", "Batch2"), each = 4)
+LinePlot(data, x = "time", y = "value", group_by = "group", split_by = "batch")
+
+# Faceted plot
+LinePlot(data, x = "time", y = "value", group_by = "group", facet_by = "batch")
+
+
+# ============================================================================
+# 23. manhattanplot.R
+# ============================================================================
+
+set.seed(1000)
+
+nsim <- 50000
+
+simdata <- data.frame(
+  "chromosome" = sample(c(1:22, "X"), size = nsim, replace = TRUE),
+  "position" = sample(1:100000000, size = nsim),
+  "P.value" = rbeta(nsim, shape1 = 5, shape2 = 1)^7,
+  "cohort" = sample(c("A", "B"), size = nsim, replace = TRUE)
+)
+simdata$chromosome <- factor(simdata$chromosome, c(1:22, "X"))
+ManhattanPlot(
+  simdata,
+  pval_by = "P.value", chr_by = "chromosome", pos_by = "position",
+  title = "Simulated P.Values", ylab = "P"
+)
+
+ManhattanPlot(
+  simdata,
+  pval_by = "P.value", chr_by = "chromosome", pos_by = "position",
+  title = "Simulated P.Values", ylab = "P", split_by = "cohort", ncol = 1
+)
+
+ManhattanPlot(
+  simdata,
+  pval_by = "P.value", chr_by = "chromosome", pos_by = "position",
+  title = "Simulated -Log2 P.Values", ylab = "-log2(P)", pval_transform = "-log2",
+  signif_color = c("red", "blue")
+)
+
+
+# ============================================================================
+# 24. network.R
+# ============================================================================
+
+actors <- data.frame(
+  name = c("Alice", "Bob", "Cecil", "David", "Esmeralda"),
+  age = c(48, 33, 45, 34, 21),
+  shape = c(21, 22, 21, 22, 23),
+  gender = c("F", "M", "F", "M", "F")
+)
+relations <- data.frame(
+  from = c(
+    "Bob", "Cecil", "Cecil", "David", "David", "Esmeralda", "Bob", "Alice",
+    "Cecil", "David"
+  ),
+  to = c(
+    "Alice", "Bob", "Alice", "Alice", "Bob", "Alice", "Bob", "Alice", "Cecil",
+    "David"
+  ),
+  friendship = c(4, 5, 5, 2, 1, 1, 2, 1, 3, 4),
+  type = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 2)
+)
+Network(relations, actors)
+Network(relations, actors,
+  link_weight_by = "friendship", node_size_by = "age",
+  node_fill_by = "gender", link_color_by = "to",
+  layout = "circle", link_curvature = 0.2
+)
+Network(relations, actors,
+  layout = "tree", directed = FALSE, cluster = "fast_greedy",
+  add_mark = TRUE
+)
+
+
+# ============================================================================
+# 25. piechart.R
+# ============================================================================
+
+# Create sample data
+data <- data.frame(
+  x = c("A", "B", "C", "D", "E", "F", "G", "H"),
+  y = c(10, 8, 16, 4, 6, 12, 14, 2),
+  group = c("G1", "G1", "G2", "G2", "G3", "G3", "G4", "G4"),
+  facet = c("F1", "F2", "F3", "F4", "F1", "F2", "F3", "F4")
+)
+
+# Basic pie chart
+PieChart(data, x = "x", y = "y")
+
+# Counter-clockwise
+PieChart(data, x = "x", y = "y", clockwise = FALSE)
+
+# With labels
+PieChart(data, x = "x", y = "y", label = "group")
+
+# With faceting
+PieChart(data, x = "x", y = "y", facet_by = "facet")
+
+# Split by group
+PieChart(data, x = "x", y = "y", split_by = "group")
+
+# Custom palettes per split
+PieChart(data,
+  x = "x", y = "y", split_by = "group",
+  palette = list(G1 = "Reds", G2 = "Blues", G3 = "Greens", G4 = "Purples")
+)
+
+# Use counts (y from count)
+PieChart(data, x = "group")
+
+# With count labels
+PieChart(data, x = "group", label = ".y")
+
+
+# ============================================================================
+# 26. qqplot.R
+# ============================================================================
+
+set.seed(8525)
+data <- data.frame(norm = rnorm(100))
+
+QQPlot(data, val = "norm", band = TRUE)
+QQPlot(data, val = "norm", band = list(
+  list(bandType = "ks", mapping = ggplot2::aes(fill = "KS"), alpha = 0.3),
+  list(bandType = "ts", mapping = ggplot2::aes(fill = "TS")),
+  list(bandType = "pointwise", mapping = ggplot2::aes(fill = "Normal")),
+  list(bandType = "boot", mapping = ggplot2::aes(fill = "Bootstrap"))
+), band_alpha = 0.6)
+
+data(airquality, package = "datasets")
+di <- "exp" # exponential distribution
+dp <- list(rate = 2) # exponential rate parameter
+QQPlot(airquality,
+  val = "Ozone",
+  band = list(distribution = di, dparams = dp),
+  line = list(distribution = di, dparams = dp),
+  point = list(distribution = di, dparams = dp)
+)
+
+de <- TRUE # enabling the detrend option
+QQPlot(airquality,
+  val = "Ozone",
+  band = list(distribution = di, dparams = dp, detrend = de),
+  line = list(distribution = di, dparams = dp, detrend = de),
+  point = list(distribution = di, dparams = dp, detrend = de)
+)
+
+QQPlot(data, val = "norm", type = "pp", band = TRUE)
+
+dp <- list(mean = 2, sd = 2) # shifted and rescaled Normal parameters
+QQPlot(data,
+  val = "norm", type = "pp",
+  band = list(dparams = dp),
+  point = list(dparams = dp)
+)
+
+QQPlot(data,
+  val = "norm", type = "pp", band = TRUE,
+  line = list(ab = c(.2, .5))
+)
+
+di <- "exp"
+dp <- list(rate = .022) # value is based on some empirical tests
+de <- TRUE
+QQPlot(airquality,
+  val = "Ozone", type = "pp",
+  band = list(distribution = di, detrend = de, dparams = dp),
+  line = list(detrend = de),
+  point = list(distribution = di, detrend = de, dparams = dp),
+  ylim = c(-.5, .5)
+)
+
+
+# ============================================================================
+# 27. radarplot.R
+# ============================================================================
+
+# Use counts
+data <- data.frame(
+  x = c(rep("A", 2), rep("B", 3), rep("C", 3), rep("D", 4), rep("E", 5)),
+  group = sample(paste0("G", 1:4), 17, replace = TRUE)
+)
+RadarPlot(data, x = "x")
+RadarPlot(data, x = "x", bg_color = "lightpink")
+RadarPlot(data, x = "x", scale_y = "none")
+RadarPlot(data, x = "x", group_by = "group")
+SpiderPlot(data, x = "x")
+SpiderPlot(data, x = "x", group_by = "group")
+
+# Use y values
+data <- data.frame(
+  x = rep(LETTERS[1:5], 2),
+  y = c(1, 3, 6, 4, 2, 5, 7, 8, 9, 10),
+  group = rep(c("G1", "G2"), each = 5)
+)
+RadarPlot(data, x = "x", y = "y", scale_y = "none", group_by = "group")
+RadarPlot(data, x = "x", y = "y", facet_by = "group")
+RadarPlot(data, x = "x", y = "y", split_by = "group")
+RadarPlot(data,
+  x = "x", y = "y", split_by = "group",
+  palette = c(G1 = "Set1", G2 = "Paired")
+)
+
+
+# ============================================================================
+# 28. rarefactionplot.R
+# ============================================================================
+
+set.seed(8525)
+spider <- list(
+  Girdled = c(46, 22, 17, 15, 15, 9, 8, 6, 6, 4, rep(2, 4), rep(1, 12)),
+  Logged = c(
+    88, 22, 16, 15, 13, 10, 8, 8, 7, 7, 7, 5, 4, 4, 4, 3, 3, 3, 3,
+    2, 2, 2, 2, rep(1, 14)
+  )
+)
+
+RarefactionPlot(spider)
+RarefactionPlot(spider, q = c(0, 1, 2), facet_by = "q")
+RarefactionPlot(spider, q = c(0, 1, 2), split_by = "q")
+RarefactionPlot(spider,
+  q = c(0, 1, 2), split_by = "q",
+  palette = c("0" = "Paired", "1" = "Set1", "2" = "Dark2")
+)
+RarefactionPlot(spider,
+  q = c(0, 1, 2), group_by = "q",
+  facet_by = "group", palette = "Set1", type = 3
+)
+
+
+# ============================================================================
+# 29. ringplot.R
+# ============================================================================
+
+# Basic ring plot with single ring
+RingPlot(datasets::iris, group_by = "Species")
+
+# Multiple rings
+data <- data.frame(
+  x = c("A", "B", "C", "A", "B", "C"),
+  y = c(1, 2, 3, 4, 5, 6),
+  group = c("a", "a", "a", "b", "b", "b")
+)
+RingPlot(data, x = "x", y = "y", group_by = "group")
+
+# With faceting
+RingPlot(datasets::mtcars, x = "cyl", group_by = "carb", facet_by = "vs")
+
+# With splitting and custom palettes
+RingPlot(datasets::mtcars,
+  x = "cyl", group_by = "carb", split_by = "vs",
+  palette = c("0" = "Set1", "1" = "Paired")
+)
+
+
+# ============================================================================
+# 30. roccurve.R
+# ============================================================================
+
+set.seed(8525)
+
+D.ex <- rbinom(200, size = 1, prob = .5)
+M1 <- rnorm(200, mean = D.ex, sd = .65)
+M2 <- rnorm(200, mean = D.ex, sd = 1.5)
+gender <- c("Male", "Female")[rbinom(200, 1, .49) + 1]
+
+data <- data.frame(
+  D = D.ex, D.str = c("Healthy", "Ill")[D.ex + 1],
+  gender = gender, M1 = M1, M2 = M2
+)
+
+ROCCurve(data, truth_by = "D", score_by = "M1")
+# will warn about the positive label
+ROCCurve(data, truth_by = "D.str", score_by = "M1")
+ROCCurve(data, truth_by = "D", score_by = "M1", increasing = FALSE)
+# Multiple ROC curves
+ROCCurve(data, truth_by = "D", score_by = c("M1", "M2"), group_name = "Method")
+ROCCurve(data, truth_by = "D", score_by = "M1", group_by = "gender", show_auc = "plot")
+# Reverse the x-axis and display the axes as percentages
+ROCCurve(data, truth_by = "D", score_by = "M1", x_axis_reverse = TRUE, percent = TRUE)
+# Pass additional arguments to geom_roc and make the curve black
+ROCCurve(data, truth_by = "D", score_by = "M1", n_cuts = 10, palcolor = "black")
+# Add confidence intervals
+ROCCurve(data, truth_by = "D", score_by = "M1", ci = list(sig.level = .01))
+# Facet by a column
+ROCCurve(data, truth_by = "D", score_by = "M1", facet_by = "gender")
+# Show cutoffs
+ROCCurve(data, truth_by = "D", score_by = "M1", cutoffs_at = c(0, "ROC01", "SpEqualSe"))
+# Split by a column
+p <- ROCCurve(data, truth_by = "D", score_by = "M1", split_by = "gender")
+p
+# Retrieve the AUC values
+attr(p, "auc")
+# Retrieve the cutoffs
+attr(p, "cutoffs")
+
+
+# ============================================================================
+# 31. sankeyplot.R
+# ============================================================================
+
+# Reproduce the examples in ggalluvial
+set.seed(8525)
+
+data(UCBAdmissions, package = "datasets")
+UCBAdmissions <- as.data.frame(UCBAdmissions)
+SankeyPlot(as.data.frame(UCBAdmissions),
+  x = c("Gender", "Dept"),
+  y = "Freq", nodes_width = 1 / 12, links_fill_by = "Admit", nodes_label = TRUE,
+  nodes_palette = "simspec", links_palette = "Set1", links_alpha = 0.5,
+  nodes_palcolor = "black", links_color = "transparent"
+)
+
+data(HairEyeColor, package = "datasets")
+SankeyPlot(as.data.frame(HairEyeColor),
+  x = c("Hair", "Eye", "Sex"),
+  y = "Freq", links_fill_by = "Eye", nodes_width = 1 / 8, nodes_alpha = 0.4,
+  flip = TRUE, reverse = FALSE, knot.pos = 0, links_color = "transparent",
+  ylab = "Freq", links_alpha = 0.5, links_name = "Eye (links)", links_palcolor = c(
+    Brown = "#70493D", Hazel = "#E2AC76", Green = "#3F752B", Blue = "#81B0E4"
+  )
+)
+
+data(Refugees, package = "alluvial")
+country_regions <- c(
+  Afghanistan = "Middle East",
+  Burundi = "Central Africa",
+  `Congo DRC` = "Central Africa",
+  Iraq = "Middle East",
+  Myanmar = "Southeast Asia",
+  Palestine = "Middle East",
+  Somalia = "Horn of Africa",
+  Sudan = "Central Africa",
+  Syria = "Middle East",
+  Vietnam = "Southeast Asia"
+)
+Refugees$region <- country_regions[Refugees$country]
+SankeyPlot(Refugees,
+  x = "year", y = "refugees", alluvium = "country",
+  links_fill_by = "country", links_color = ".fill", links_alpha = 0.75,
+  links_palette = "Set3", facet_by = "region", x_text_angle = -45, nodes_legend = "none",
+  theme_args = list(strip.background = ggplot2::element_rect(fill = "grey80")),
+  decreasing = FALSE, nodes_width = 0, nodes_color = "transparent", ylab = "refugees",
+  title = "Refugee volume by country and region of origin"
+)
+
+data(majors, package = "ggalluvial")
+majors$curriculum <- as.factor(majors$curriculum)
+SankeyPlot(majors,
+  x = "semester", stratum = "curriculum", alluvium = "student",
+  links_fill_by = "curriculum", flow = TRUE, stat = "alluvium", nodes_palette = "Set2",
+  links_palette = "Set2"
+)
+
+data(vaccinations, package = "ggalluvial")
+vaccinations <- transform(vaccinations,
+  response = factor(response, rev(levels(response)))
+)
+SankeyPlot(vaccinations,
+  x = "survey", stratum = "response", alluvium = "subject",
+  y = "freq", links_fill_by = "response", nodes_label = TRUE, nodes_alpha = 0.5,
+  nodes_palette = "seurat", links_palette = "seurat", links_alpha = 0.5,
+  legend.position = "none", flow = TRUE, expand = c(0, 0, 0, .15), stat = "alluvium",
+  title = "vaccination survey responses at three points in time"
+)
+
+data(Titanic, package = "datasets")
+SankeyPlot(as.data.frame(Titanic),
+  x = c("Class", "Sex"), y = "Freq",
+  links_fill_by = "Survived", flow = TRUE, facet_by = "Age", facet_scales = "free_y",
+  nodes_label = TRUE, expand = c(0.05, 0), xlab = "", links_palette = "Set1",
+  nodes_palcolor = "white", nodes_label_miny = 10
+)
+
+# Simulated examples
+df <- data.frame(
+  Clone = paste0("clone", 1:10),
+  Timepoint1 = sample(c(rep(0, 30), 1:100), 10),
+  Timepoint2 = sample(c(rep(0, 30), 1:100), 10)
+)
+SankeyPlot(df,
+  x = c("Timepoint1", "Timepoint2"), alluvium = "Clone",
+  links_color = ".fill"
+)
+
+df <- data.frame(
+  Clone = rep(paste0("clone", 1:6), each = 2),
+  Timepoint1 = sample(c(rep(0, 30), 1:100), 6),
+  Timepoint2 = sample(c(rep(0, 30), 1:100), 6),
+  Group = rep(c("A", "B"), 6)
+)
+SankeyPlot(df,
+  x = c(".", "Timepoint1", "Timepoint2"),
+  stratum = "Group", links_fill_by = "Clone", links_color = ".fill"
+)
+
+
+# ============================================================================
+# 32. scatterplot.R
+# ============================================================================
+
+# Create sample data
+set.seed(8525)
+data <- data.frame(
+  x = rnorm(100),
+  y = rnorm(100),
+  size_val = abs(rnorm(100)),
+  category = sample(c("A", "B", "C"), 100, replace = TRUE),
+  group = sample(c("Group1", "Group2"), 100, replace = TRUE)
+)
+
+# Basic scatter plot
+ScatterPlot(data, x = "x", y = "y")
+
+# Highlight specific points
+ScatterPlot(data, x = "x", y = "y", highlight = "x > 1 & y > 0")
+
+# Size by numeric column
+ScatterPlot(data, x = "x", y = "y", size_by = "size_val")
+
+# Color by numeric column with continuous gradient
+ScatterPlot(data, x = "x", y = "y", color_by = "size_val", palette = "RdYlBu")
+
+# Color by categorical column
+ScatterPlot(data, x = "x", y = "y", color_by = "category")
+
+# Combine size and color mapping with custom border
+ScatterPlot(data,
+  x = "x", y = "y", size_by = "size_val", color_by = "category",
+  border_color = "black"
+)
+
+# Border color matches fill color (for cohesive look)
+ScatterPlot(data,
+  x = "x", y = "y", color_by = "category",
+  border_color = TRUE
+)
+
+# Use shape without fill (solid points)
+ScatterPlot(data,
+  x = "x", y = "y", color_by = "category",
+  shape = 16, palette = "Set1"
+)
+
+# Split by group to create separate panels
+ScatterPlot(data,
+  x = "x", y = "y", color_by = "category",
+  split_by = "group", combine = TRUE
+)
+
+# Facet by group (alternative to split_by)
+ScatterPlot(data, x = "x", y = "y", color_by = "category", facet_by = "group")
+
+# Log transformation of axes
+data_pos <- data.frame(
+  x = 10^rnorm(100, 2, 1),
+  y = 10^rnorm(100, 3, 0.5)
+)
+ScatterPlot(data_pos, x = "x", y = "y", xtrans = "log10", ytrans = "log10")
+
+
+# ============================================================================
+# 33. spatialplot.R
+# ============================================================================
+
+# Create a simple raster
+library(terra)
+r <- rast(ncols = 100, nrows = 100, xmin = 0, xmax = 100, ymin = 0, ymax = 100)
+values(r) <- runif(ncell(r))
+
+# Plot raster image
+SpatImagePlot(r, palette = "viridis")
+
+# Plot with custom extent
+SpatImagePlot(r, ext = c(20, 80, 20, 80), palette = "turbo")
+
+
+# ============================================================================
+# 34. spatialplot.R
+# ============================================================================
+
+# Create a mask raster
+library(terra)
+r <- rast(ncols = 50, nrows = 50, xmin = 0, xmax = 50, ymin = 0, ymax = 50)
+values(r) <- sample(0:3, ncell(r), replace = TRUE)
+
+# Plot masks with borders
+SpatMasksPlot(r, add_border = TRUE, palette = "Set2")
+
+
+# ============================================================================
+# 35. spatialplot.R
+# ============================================================================
+
+# Create polygon data
+library(terra)
+v <- vect("POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0))")
+
+# Plot shapes
+SpatShapesPlot(v, fill_by = "grey80", border_color = "black")
+
+# Plot with data.frame
+poly_df <- data.frame(
+  x = c(0, 10, 10, 0),
+  y = c(0, 0, 10, 10),
+  group = rep(1, 4)
+)
+SpatShapesPlot(poly_df, x = "x", y = "y", group = "group")
+
+
+# ============================================================================
+# 36. spatialplot.R
+# ============================================================================
+
+# Create spatial point data
+spatial_data <- data.frame(
+  x = runif(1000, 0, 100),
+  y = runif(1000, 0, 100),
+  cluster = sample(c("A", "B", "C"), 1000, replace = TRUE),
+  value = rnorm(1000)
+)
+
+# Basic point plot
+SpatPointsPlot(spatial_data, x = "x", y = "y", color_by = "cluster")
+
+# Continuous color scale
+SpatPointsPlot(spatial_data, x = "x", y = "y", color_by = "value", palette = "viridis")
+
+# Hex binning for large datasets
+SpatPointsPlot(spatial_data, x = "x", y = "y", color_by = "value", hex = TRUE)
+
+# Add labels
+SpatPointsPlot(spatial_data,
+  x = "x", y = "y", color_by = "cluster",
+  label = TRUE, label_repel = TRUE
+)
+
+
+# ============================================================================
+# 37. trendplot.R
+# ============================================================================
+
+# Create sample data
+data <- data.frame(
+  x = rep(c("A", "B", "C", "D"), 2),
+  y = c(1, 3, 6, 4, 2, 5, 7, 8),
+  group = rep(c("F1", "F2"), each = 4)
+)
+
+# Basic trend plot
+TrendPlot(data, x = "x", y = "y", group_by = "group")
+
+# With scaled y-axis
+TrendPlot(data, x = "x", y = "y", group_by = "group", scale_y = TRUE)
+
+# Split by group
+TrendPlot(data, x = "x", y = "y", split_by = "group")
+
+# Custom palettes per split
+TrendPlot(data,
+  x = "x", y = "y", split_by = "group",
+  palette = list(F1 = "Set1", F2 = "Paired")
+)
+
+
+# ============================================================================
+# 38. upsetplot.R
+# ============================================================================
+
+# Example 1: Basic upset plot with list input
+data <- list(
+  A = 1:5,
+  B = 2:6,
+  C = 3:7,
+  D = 4:8
+)
+UpsetPlot(data)
+
+# Example 2: Without labels
+UpsetPlot(data, label = FALSE)
+
+# Example 3: Custom palette and show all overlaps
+UpsetPlot(data, palette = "Reds", specific = FALSE)
+
+# Example 4: Limit number of sets and intersections
+UpsetPlot(data, n_sets = 3, n_intersections = 10)
+
+# Example 5: Wide format data
+wide_data <- data.frame(
+  A = c(TRUE, TRUE, FALSE, TRUE),
+  B = c(TRUE, FALSE, TRUE, TRUE),
+  C = c(FALSE, TRUE, TRUE, TRUE)
+)
+UpsetPlot(wide_data, in_form = "wide")
+
+
+# ============================================================================
+# 39. velocityplot.R
+# ============================================================================
+
+# Load example data
+data(dim_example)
+
+# Basic raw velocity plot
+VelocityPlot(
+  embedding = dim_example[, 1:2],
+  v_embedding = dim_example[, 3:4]
+)
+
+# Velocity plot with grouping
+VelocityPlot(
+  embedding = dim_example[, 1:2],
+  v_embedding = dim_example[, 3:4],
+  group_by = dim_example$clusters,
+  group_palette = "Set2"
+)
+
+# Grid-based velocity plot (smoothed arrows)
+VelocityPlot(
+  embedding = dim_example[, 1:2],
+  v_embedding = dim_example[, 3:4],
+  plot_type = "grid",
+  density = 2
+)
+
+# Streamline velocity plot
+VelocityPlot(
+  embedding = dim_example[, 1:2],
+  v_embedding = dim_example[, 3:4],
+  plot_type = "stream",
+  streamline_n = 20
+)
+
+
+# ============================================================================
+# 40. venndiagram.R
+# ============================================================================
+
+set.seed(8525)
+data <- list(
+  A = sort(sample(letters, 8)),
+  B = sort(sample(letters, 8)),
+  C = sort(sample(letters, 8)),
+  D = sort(sample(letters, 8))
+)
+
+VennDiagram(data)
+VennDiagram(data, fill_mode = "set")
+VennDiagram(data, label = "both")
+VennDiagram(data, palette = "material-indigo", alpha = 0.6)
+
+
+# ============================================================================
+# 41. volcanoplot.R
+# ============================================================================
+
+set.seed(8525)
+# Obtained by Seurat::FindMarkers for the first cluster of pbmc_small
+data <- data.frame(
+  avg_log2FC = c(
+    -3.69, -4.10, -2.68, -3.51, -3.09, -2.52, -3.53, -3.35, -2.82, -2.71,
+    3.67, 4.79, 10.14, 5.36, 4.56, 4.62, 3.31, 4.72, 3.01, 3.86
+  ),
+  p_val_adj = c(
+    3.82e-09, 1.52e-07, 1.79e-07, 4.68e-07, 4.83e-07, 6.26e-07, 2.61e-06,
+    1.33e-05, 1.79e-05, 3.71e-05, 8.93e-04, 9.61e-04, 1.47e-03, 4.35e-03,
+    4.85e-03, 5.12e-03, 1.90e-02, 2.13e-02, 3.80e-02, 6.72e-02
+  ),
+  gene = c(
+    "HLA-DPB1", "LYZ", "HLA-DRA", "TYMP", "HLA-DPA1", "HLA-DRB1", "CST3",
+    "HLA-DQB1", "HLA-DRB5", "LST1", "CCL5", "LCK", "MS4A6A", "CD3D", "CD7",
+    "CD3E", "CTSW", "GZMM", "GZMA", "IL32"
+  ),
+  group = sample(LETTERS[1:2], 20, replace = TRUE)
+)
+
+VolcanoPlot(data, x = "avg_log2FC", y = "p_val_adj", y_cutoff_name = "-log10(0.05)")
+VolcanoPlot(data,
+  x = "avg_log2FC", y = "p_val_adj",
+  label_by = "gene", y_cutoff_name = "-log10(0.05)"
+)
+VolcanoPlot(data,
+  x = "avg_log2FC", y = "p_val_adj", y_cutoff_name = "none",
+  flip_negatives = TRUE, label_by = "gene"
+)
+VolcanoPlot(data,
+  x = "avg_log2FC", y = "p_val_adj", y_cutoff_name = "none",
+  flip_negatives = TRUE, facet_by = "group", label_by = "gene"
+)
+VolcanoPlot(data,
+  x = "avg_log2FC", y = "p_val_adj", y_cutoff_name = "none",
+  flip_negatives = TRUE, split_by = "group", label_by = "gene"
+)
+
+
+# ============================================================================
+# 42. wordcloudplot.R
+# ============================================================================
+
+# Create sample data with words
+data <- data.frame(
+  word = rep(c(
+    "apple", "banana", "cherry", "date", "elderberry",
+    "fig", "grape", "kiwi", "lemon", "mango"
+  ), each = 5),
+  count = sample(1:50, 50, replace = TRUE),
+  score = rnorm(50, mean = 5, sd = 2),
+  group = rep(c("A", "B"), 25)
+)
+
+# Basic word cloud from words
+WordCloudPlot(data, word_by = "word", count_by = "count", score_by = "score")
+
+# Word cloud with custom palette
+WordCloudPlot(data,
+  word_by = "word", count_by = "count", score_by = "score",
+  palette = "RdYlBu", palreverse = TRUE
+)
+
+# Word cloud with split by group
+WordCloudPlot(data,
+  word_by = "word", count_by = "count", score_by = "score",
+  split_by = "group", combine = TRUE
+)
+
+# Create sample data with sentences
+sentence_data <- data.frame(
+  text = c(
+    "Data science is an interdisciplinary field",
+    "Machine learning uses statistical techniques",
+    "Artificial intelligence is transforming industries",
+    "Deep learning is a subset of machine learning"
+  ),
+  score = c(1, 2, 3, 4)
+)
+
+# Word cloud from sentences (auto-splitting)
+WordCloudPlot(sentence_data,
+  sentence_by = "text",
+  score_by = "score",
+  top_words = 20
+)
+

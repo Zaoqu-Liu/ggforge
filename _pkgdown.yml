@@ -1,0 +1,171 @@
+url: https://zaoqu-liu.github.io/ggforge
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    primary: "#3B4992"
+  includes:
+    in_header: |
+      <!-- pkgdown configuration -->
+      <meta name="description" content="Comprehensive visualization toolkit for biomedical research">
+  
+development:
+  mode: auto
+
+opengraph:
+  image:
+    alt: "ggforge - Comprehensive Visualization Toolkit"
+    
+home:
+  title: ggforge - Comprehensive Visualization Toolkit for Biomedical Research
+  description: >
+    40+ plotting functions for enrichment analysis, GSEA, single-cell, 
+    spatial transcriptomics, survival analysis, and genomics.
+
+navbar:
+  structure:
+    left:  [home, reference, articles, news]
+    right: [search, github]
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Vignettes
+      menu:
+      - text: Introduction to ggforge
+        href: articles/introduction.html
+    news:
+      text: Changelog
+      href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/Zaoqu-Liu/ggforge
+
+reference:
+- title: Basic Statistical Plots
+  desc: >
+    Functions for creating basic statistical visualizations
+  contents:
+  - ScatterPlot
+  - LinePlot
+  - BarPlot
+  - BoxPlot
+  - ViolinPlot
+  - DensityPlot
+  - JitterPlot
+  - AreaPlot
+  - Histogram
+  - QQPlot
+  - TrendPlot
+  - RidgePlot
+  - DotPlot
+  - LollipopPlot
+  - WaterfallPlot
+
+- title: Enrichment & Pathway Analysis
+  desc: >
+    Functions for visualizing enrichment and pathway analysis results
+  contents:
+  - EnrichMap
+  - EnrichNetwork
+  - GSEASummaryPlot
+  - GSEAPlot
+
+- title: Single-Cell & Spatial Analysis
+  desc: >
+    Functions for single-cell and spatial transcriptomics
+  contents:
+  - DimPlot
+  - FeatureDimPlot
+  - VelocityPlot
+  - SpatImagePlot
+  - SpatPointsPlot
+  - SpatShapesPlot
+  - SpatMasksPlot
+
+- title: Genomics
+  desc: >
+    Functions for genomics data visualization
+  contents:
+  - VolcanoPlot
+  - ManhattanPlot
+  - VennDiagram
+  - UpsetPlot
+
+- title: Survival & Clinical
+  desc: >
+    Functions for survival and clinical data analysis
+  contents:
+  - KMPlot
+  - ROCCurve
+
+- title: Networks & Relationships
+  desc: >
+    Functions for network and relationship visualization
+  contents:
+  - CorPlot
+  - ChordPlot
+  - SankeyPlot
+  - Network
+  - AlluvialPlot
+
+- title: Specialized Plots
+  desc: >
+    Specialized visualization functions
+  contents:
+  - Heatmap
+  - RadarPlot
+  - SpiderPlot
+  - PieChart
+  - RingPlot
+  - WordCloudPlot
+  - RarefactionPlot
+  - ClustreePlot
+  - CircosPlot
+  - SplitBarPlot
+
+- title: Themes & Palettes
+  desc: >
+    Theme and color palette functions
+  contents:
+  - themes
+  - theme_ggforge
+  - theme_ggforge_grid
+  - theme_minimal_axes
+  - palettes
+  - get_palette
+  - show_palettes
+
+- title: Example Data
+  desc: >
+    Example datasets for demonstration
+  contents:
+  - dim_example
+  - enrich_example
+  - enrich_multidb_example
+  - gsea_example
+  - palette_list
+  - words_excluded
+
+- title: Utilities
+  desc: >
+    Utility functions
+  contents:
+  - var_type
+
+authors:
+  Zaoqu Liu:
+    href: https://orcid.org/0000-0002-0452-742X
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with
+  components:
+    developed_by: "Developed by [Zaoqu Liu](https://github.com/Zaoqu-Liu)"
+    built_with: "Built with [pkgdown](https://pkgdown.r-lib.org/)"

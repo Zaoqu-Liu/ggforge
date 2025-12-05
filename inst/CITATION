@@ -1,0 +1,17 @@
+bibentry(
+  bibtype = "Manual",
+  title = "ggforge: Comprehensive Visualization Toolkit for Biomedical Research",
+  author = person("Zaoqu", "Liu"),
+  year = "2025",
+  note = "R package version 1.0.0",
+  url = "https://github.com/Zaoqu-Liu/ggforge",
+  textVersion = paste(
+    "Liu Z (2025).",
+    "ggforge: Comprehensive Visualization Toolkit for Biomedical Research.",
+    "R package version 1.0.0.",
+    "https://github.com/Zaoqu-Liu/ggforge"
+  ),
+  header = "To cite ggforge in publications, please use:",
+  footer = "This package is greatly inspired by and modified from plotthis by Panwen Wang (https://github.com/pwwang/plotthis)."
+)
+

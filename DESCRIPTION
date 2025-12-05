@@ -1,0 +1,80 @@
+Package: ggforge
+Title: Comprehensive Visualization Toolkit for Biomedical Research
+Version: 1.0.0
+Authors@R: c(
+    person("Zaoqu", "Liu", 
+           email = "liuzaoqu@163.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-0452-742X"))
+    )
+Description: A comprehensive and elegant visualization framework designed for biomedical 
+    and bioinformatics research. Built on 'ggplot2' with a modern modular architecture, 
+    it provides 40+ publication-ready plotting functions covering statistical graphics, 
+    enrichment analysis (GO, KEGG, GSEA), single-cell and spatial transcriptomics 
+    (dimensionality reduction, velocity fields), multi-omics integration (heatmaps, 
+    chord diagrams, networks), survival analysis (Kaplan-Meier curves), genomics 
+    (volcano plots, Manhattan plots), and advanced visualizations (sankey diagrams, 
+    upset plots, word clouds). Features a unified API design with intelligent type 
+    detection, publication-grade themes, extensive color palettes, and flexible 
+    customization options. Streamlines the creation of complex multi-panel figures 
+    with minimal code while maintaining full control over aesthetics.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: R (>= 4.2.0)
+Imports: 
+    circlize,
+    cowplot,
+    dplyr,
+    forcats,
+    ggnewscale,
+    ggplot2,
+    ggrepel,
+    ggridges,
+    glue,
+    gridtext,
+    gtable,
+    methods,
+    patchwork,
+    reshape2,
+    rlang,
+    scales,
+    stringr,
+    tidyr,
+    zoo
+Suggests: 
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    Matrix,
+    alluvial,
+    ComplexHeatmap,
+    cluster,
+    clustree,
+    ggwordcloud,
+    ggalluvial,
+    ggVennDiagram (>= 1.5.0),
+    ggupset,
+    ggpubr,
+    ggforce,
+    ggraph,
+    ggridges,
+    ggmanh,
+    qqplotr,
+    hexbin,
+    igraph,
+    iNEXT,
+    scattermore,
+    sf,
+    terra,
+    concaveman,
+    plotROC,
+    OptimalCutpoints,
+    proxyC,
+    metR
+Config/testthat/edition: 3
+LazyData: true
+VignetteBuilder: knitr
+URL: https://github.com/Zaoqu-Liu/ggforge, https://zaoqu-liu.github.io/ggforge
+BugReports: https://github.com/Zaoqu-Liu/ggforge/issues
