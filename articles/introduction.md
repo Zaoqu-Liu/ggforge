@@ -505,6 +505,41 @@ KMPlot(
 - Log-rank test p-value
 - Customizable time points
 
+### Cox Regression Analysis
+
+Multivariate survival analysis with forest plot:
+
+``` r
+# Create sample data with multiple covariates
+cox_data <- data.frame(
+  time = rexp(200, 0.01),
+  event = sample(0:1, 200, replace = TRUE, prob = c(0.3, 0.7)),
+  age = rnorm(200, 60, 10),
+  gender = sample(c("Male", "Female"), 200, replace = TRUE),
+  stage = sample(c("I", "II", "III", "IV"), 200, replace = TRUE),
+  treatment = sample(c("A", "B"), 200, replace = TRUE)
+)
+
+CoxPlot(
+  data = cox_data,
+  time = "time",
+  event = "event",
+  vars = c("age", "gender", "stage", "treatment"),
+  plot_type = "forest",
+  palette = "nejm",
+  title = "Cox Proportional Hazards Model"
+)
+```
+
+![](introduction_files/figure-html/coxplot-1.png)
+
+**Key features:**
+
+- Forest plot showing hazard ratios
+- Confidence intervals for each covariate
+- P-values for statistical significance
+- Automatic handling of categorical and continuous variables
+
 ## Network Visualization
 
 ### Heatmap

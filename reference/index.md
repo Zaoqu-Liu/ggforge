@@ -84,6 +84,8 @@ Functions for survival and clinical data analysis
 
 - [`KMPlot()`](https://zaoqu-liu.github.io/ggforge/reference/KMPlot.md)
   : Kaplan-Meier Survival Plot
+- [`CoxPlot()`](https://zaoqu-liu.github.io/ggforge/reference/CoxPlot.md)
+  : Cox Proportional-Hazards Model Visualization
 - [`ROCCurve()`](https://zaoqu-liu.github.io/ggforge/reference/ROCCurve.md)
   : ROC Curve Plot
 
