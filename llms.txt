@@ -1,4 +1,4 @@
-# ggforge ![](reference/figures/logo.png)
+# ggforge
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -17,17 +17,13 @@ spatial analysis, survival analysis, and genomics visualization.
 
 ## Documentation
 
-### Online Resources
+Complete documentation is available at:
+<https://zaoqu-liu.github.io/ggforge>
 
-**Complete documentation and interactive tutorials are available at:**
-
-### **<https://zaoqu-liu.github.io/ggforge>**
-
-- **Getting Started Tutorial**: [Introduction to
-  ggforge](https://zaoqu-liu.github.io/ggforge/articles/introduction.html)
-- **Function Reference**: [Complete API
-  Documentation](https://zaoqu-liu.github.io/ggforge/reference/)
-- **GitHub Repository**: <https://github.com/Zaoqu-Liu/ggforge>
+- Getting Started Tutorial:
+  <https://zaoqu-liu.github.io/ggforge/articles/introduction.html>
+- Function Reference: <https://zaoqu-liu.github.io/ggforge/reference/>
+- GitHub Repository: <https://github.com/Zaoqu-Liu/ggforge>
 
 ------------------------------------------------------------------------
 
