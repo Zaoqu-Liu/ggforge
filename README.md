@@ -1,44 +1,41 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ggforge <img src="man/figures/logo.png" align="right" height="139" />
-
-<!-- badges: start -->
+# ggforge
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/Zaoqu-Liu/ggforge/workflows/R-CMD-check/badge.svg)](https://github.com/Zaoqu-Liu/ggforge/actions)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-<!-- badges: end -->
 
-> **Comprehensive Visualization Toolkit for Biomedical Research**
+## Comprehensive Visualization Toolkit for Biomedical Research
 
 ggforge is a comprehensive and elegant visualization framework designed
-specifically for biomedical and bioinformatics research. Built on
-ggplot2 with a modern modular architecture, it streamlines the creation
-of high-quality figures with minimal code while maintaining full
-flexibility for customization.
+for biomedical and bioinformatics research. Built on ggplot2 with a
+modern modular architecture, it provides 40+ plotting functions covering
+statistical graphics, enrichment analysis, single-cell transcriptomics,
+spatial analysis, survival analysis, and genomics visualization.
 
-## ✨ Key Features
+------------------------------------------------------------------------
 
-- 🎨 **40+ Plotting Functions** - Comprehensive coverage of biomedical
-  visualization needs
-- 🧬 **Bioinformatics-Focused** - Specialized functions for enrichment,
-  GSEA, single-cell, genomics
-- 🎯 **Unified API Design** - Consistent interface across all plotting
-  functions
-- 🌈 **Extensive Color Palettes** - Carefully curated color schemes for
-  scientific research
-- 🔧 **Intelligent Type Detection** - Automatic variable type inference
-  for optimal styling
-- 📊 **Multi-Panel Layouts** - Easy creation of complex figure
-  compositions
-- 🎓 **Professional Themes** - Beautiful aesthetics out of the box
+## Documentation
 
-## 📦 Installation
+### Online Resources
 
-You can install the development version of ggforge from GitHub:
+**Complete documentation and interactive tutorials are available at:**
+
+### **<https://zaoqu-liu.github.io/ggforge>**
+
+- **Getting Started Tutorial**: [Introduction to
+  ggforge](https://zaoqu-liu.github.io/ggforge/articles/introduction.html)
+- **Function Reference**: [Complete API
+  Documentation](https://zaoqu-liu.github.io/ggforge/reference/)
+- **GitHub Repository**: <https://github.com/Zaoqu-Liu/ggforge>
+
+------------------------------------------------------------------------
+
+## Installation
 
 ``` r
 # Install from GitHub
@@ -46,25 +43,24 @@ if (!require("devtools")) install.packages("devtools")
 devtools::install_github("Zaoqu-Liu/ggforge")
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ``` r
 library(ggforge)
 library(ggplot2)
 library(dplyr)
-
-# Set seed for reproducibility
 set.seed(8525)
 ```
 
-## 📊 Basic Statistical Plots
+------------------------------------------------------------------------
 
-### Box Plots
+## Examples
 
-Create elegant box plots with automatic aesthetics:
+### Basic Statistical Plots
+
+**Box Plots**
 
 ``` r
-# Create sample data
 data <- data.frame(
   group = rep(c("Control", "Treatment A", "Treatment B"), each = 50),
   value = c(rnorm(50, 10, 2), rnorm(50, 12, 2.5), rnorm(50, 15, 2))
@@ -85,9 +81,7 @@ BoxPlot(
 
 <img src="man/figures/README-boxplot-1.png" width="100%" />
 
-### Violin Plots
-
-Visualize distributions with violin plots:
+**Violin Plots**
 
 ``` r
 ViolinPlot(
@@ -105,12 +99,9 @@ ViolinPlot(
 
 <img src="man/figures/README-violinplot-1.png" width="100%" />
 
-### Scatter Plots
-
-Create high-quality scatter plots with correlation statistics:
+**Scatter Plots**
 
 ``` r
-# Create correlated data
 n <- 200
 scatter_data <- data.frame(
   gene_A = rnorm(n, 100, 20),
@@ -135,9 +126,7 @@ ScatterPlot(
 
 <img src="man/figures/README-scatterplot-1.png" width="100%" />
 
-### Density Plots
-
-Visualize distributions with smooth density curves:
+**Density Plots**
 
 ``` r
 DensityPlot(
@@ -153,9 +142,7 @@ DensityPlot(
 
 <img src="man/figures/README-densityplot-1.png" width="100%" />
 
-### Bar Plots
-
-Create bar charts with error bars:
+**Bar Plots**
 
 ``` r
 BarPlot(
@@ -173,12 +160,9 @@ BarPlot(
 
 <img src="man/figures/README-barplot-1.png" width="100%" />
 
-### Line Plots
-
-Visualize trends over time:
+**Line Plots**
 
 ``` r
-# Create time series data
 time_data <- data.frame(
   time = rep(1:10, 3),
   value = c(
@@ -205,14 +189,13 @@ LinePlot(
 
 <img src="man/figures/README-lineplot-1.png" width="100%" />
 
-## 🧬 Enrichment Analysis Visualization
+------------------------------------------------------------------------
 
-### Enrichment Network
+### Enrichment Analysis
 
-Visualize relationships between enriched terms:
+**Enrichment Network**
 
 ``` r
-# Load example enrichment data
 data("enrich_multidb_example")
 
 EnrichNetwork(
@@ -226,9 +209,7 @@ EnrichNetwork(
 
 <img src="man/figures/README-enrichment-network-1.png" width="100%" />
 
-### Enrichment Map
-
-Create enrichment maps showing term similarity:
+**Enrichment Map**
 
 ``` r
 data("enrich_example")
@@ -244,14 +225,13 @@ EnrichMap(
 
 <img src="man/figures/README-enrichment-map-1.png" width="100%" />
 
-## 📈 GSEA Visualization
+------------------------------------------------------------------------
 
-### GSEA Summary Plot
+### GSEA Visualization
 
-Visualize multiple GSEA results at once:
+**GSEA Summary Plot**
 
 ``` r
-# Load GSEA example data
 data("gsea_example")
 
 GSEASummaryPlot(
@@ -264,9 +244,7 @@ GSEASummaryPlot(
 
 <img src="man/figures/README-gsea-summary-1.png" width="100%" />
 
-### Individual GSEA Plot
-
-Show detailed enrichment curve for specific pathways:
+**GSEA Enrichment Plot**
 
 ``` r
 GSEAPlot(
@@ -278,14 +256,13 @@ GSEAPlot(
 
 <img src="man/figures/README-gsea-plot-1.png" width="100%" />
 
-## 🔬 Single-Cell & Spatial Analysis
+------------------------------------------------------------------------
 
-### Dimensionality Reduction Plots
+### Single-Cell Analysis
 
-Visualize UMAP, t-SNE, or PCA results:
+**Dimensionality Reduction**
 
 ``` r
-# Load dimension reduction example
 data("dim_example")
 
 DimPlot(
@@ -303,12 +280,9 @@ DimPlot(
 
 <img src="man/figures/README-dimplot-1.png" width="100%" />
 
-### Feature Expression on Reduced Dimensions
-
-Overlay gene expression on dimensionality reduction:
+**Feature Expression**
 
 ``` r
-# Create feature data
 dim_example$feature <- rnorm(nrow(dim_example))
 
 FeatureDimPlot(
@@ -324,12 +298,9 @@ FeatureDimPlot(
 
 <img src="man/figures/README-feature-dimplot-1.png" width="100%" />
 
-### RNA Velocity Field
-
-Visualize RNA velocity on dimensionality reduction:
+**RNA Velocity**
 
 ``` r
-# Prepare embedding matrices
 embedding <- as.matrix(dim_example[, c("basis_1", "basis_2")])
 v_embedding <- as.matrix(dim_example[, c("stochasticbasis_1", "stochasticbasis_2")])
 
@@ -343,14 +314,13 @@ VelocityPlot(
 
 <img src="man/figures/README-velocity-1.png" width="100%" />
 
-## 🧪 Genomics Visualization
+------------------------------------------------------------------------
 
-### Volcano Plot
+### Genomics Visualization
 
-Visualize differential expression results:
+**Volcano Plot**
 
 ``` r
-# Create sample DEG data
 deg_data <- data.frame(
   gene = paste0("Gene", 1:500),
   log2FC = rnorm(500, 0, 1.5),
@@ -358,7 +328,6 @@ deg_data <- data.frame(
 )
 deg_data$padj <- p.adjust(deg_data$pvalue, method = "BH")
 
-# Add some significant genes
 sig_up <- sample(1:500, 25)
 sig_down <- sample(1:500, 25)
 deg_data$log2FC[sig_up] <- abs(rnorm(25, 2, 0.5))
@@ -381,12 +350,9 @@ VolcanoPlot(
 
 <img src="man/figures/README-volcano-1.png" width="100%" />
 
-### Manhattan Plot
-
-Visualize GWAS or QTL mapping results:
+**Manhattan Plot**
 
 ``` r
-# Create sample GWAS data
 gwas_data <- data.frame(
   chr = rep(paste0("chr", 1:22), each = 500),
   pos = rep(1:500, 22) * 1e5,
@@ -406,14 +372,13 @@ ManhattanPlot(
 
 <img src="man/figures/README-manhattan-1.png" width="100%" />
 
-## 📉 Survival Analysis
+------------------------------------------------------------------------
 
-### Kaplan-Meier Curve
+### Survival Analysis
 
-Create professional survival curves:
+**Kaplan-Meier Curve**
 
 ``` r
-# Create sample survival data
 surv_data <- data.frame(
   time = rexp(150, 0.01),
   status = sample(0:1, 150, replace = TRUE, prob = c(0.4, 0.6)),
@@ -437,14 +402,13 @@ KMPlot(
 
 <img src="man/figures/README-kmplot-1.png" width="100%" />
 
-## 🌐 Network & Relationship Visualization
+------------------------------------------------------------------------
 
-### Heatmap
+### Network Visualization
 
-Create enhanced heatmaps:
+**Heatmap**
 
 ``` r
-# Create sample matrix
 set.seed(123)
 mat <- matrix(rnorm(100), 10, 10)
 rownames(mat) <- paste0("Gene", 1:10)
@@ -459,12 +423,9 @@ Heatmap(
 
 <img src="man/figures/README-heatmap-1.png" width="100%" />
 
-### Chord Diagram
-
-Visualize relationships between categories:
+**Chord Diagram**
 
 ``` r
-# Create sample interaction data
 chord_data <- data.frame(
   from = c("CD4 T", "CD8 T", "B cell", "NK", "Monocyte"),
   to = c("Fibroblast", "Endothelial", "Fibroblast", "Tumor", "Tumor"),
@@ -483,12 +444,9 @@ ChordPlot(
 
 <img src="man/figures/README-chordplot-1.png" width="100%" />
 
-### Venn Diagram
-
-Visualize set overlaps:
+**Venn Diagram**
 
 ``` r
-# Create sample gene sets
 venn_data <- list(
   SetA = paste0("Gene", 1:100),
   SetB = paste0("Gene", 50:150),
@@ -504,25 +462,23 @@ VennDiagram(
 
 <img src="man/figures/README-venn-1.png" width="100%" />
 
-## 🎨 Color Palettes
+------------------------------------------------------------------------
 
-ggforge includes extensive color palettes from multiple sources:
+### Color Palettes
 
 ``` r
-# Show available palettes (first 20)
 show_palettes(head(names(palette_list), 20))
 #>  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15"
 #> [16] "16" "17" "18" "19" "20"
 ```
 
-## 🔧 Advanced Features
+------------------------------------------------------------------------
 
-### Multi-Panel Layouts with split_by
+### Advanced Features
 
-Automatically split your data and create multi-panel figures:
+**Multi-Panel Layouts**
 
 ``` r
-# Create data with multiple groups
 multi_data <- data.frame(
   x = rep(1:10, 9),
   y = rnorm(90, rep(1:3, each = 30), 0.5),
@@ -545,95 +501,72 @@ LinePlot(
 
 <img src="man/figures/README-split-example-1.png" width="100%" />
 
-## 📚 Complete Function List
+------------------------------------------------------------------------
+
+## Key Features
+
+- **40+ plotting functions** covering comprehensive biomedical
+  visualization needs
+- **Unified API design** with consistent interface across all functions
+- **Intelligent type detection** for automatic variable styling
+- **Extensive color palettes** from RColorBrewer, ggsci, viridis, and
+  custom collections
+- **Multi-panel layouts** with automatic data splitting and combination
+- **Professional themes** optimized for scientific publications
+
+## Function Categories
 
 ### Statistical Plots
 
-- `ScatterPlot()` - Scatter plots with regression
-- `LinePlot()` - Line plots and time series
-- `BarPlot()` - Bar charts
-- `BoxPlot()` - Box plots
-- `ViolinPlot()` - Violin plots
-- `DensityPlot()` - Density distributions
-- `JitterPlot()` - Jitter plots
-- `AreaPlot()` - Area plots
-- `Histogram()` - Histograms
-- `QQPlot()` - Q-Q plots
-- `TrendPlot()` - Trend analysis
-- `RidgePlot()` - Ridge line plots
-- `DotPlot()` - Dot plots
-- `LollipopPlot()` - Lollipop charts
-- `WaterfallPlot()` - Waterfall plots
+`ScatterPlot()`, `LinePlot()`, `BarPlot()`, `BoxPlot()`, `ViolinPlot()`,
+`DensityPlot()`, `JitterPlot()`, `AreaPlot()`, `Histogram()`,
+`QQPlot()`, `TrendPlot()`, `RidgePlot()`, `DotPlot()`, `LollipopPlot()`,
+`WaterfallPlot()`
 
 ### Enrichment & Pathway Analysis
 
-- `EnrichMap()` - Enrichment map visualization
-- `EnrichNetwork()` - Enrichment network graphs
-- `GSEASummaryPlot()` - GSEA summary visualization
-- `GSEAPlot()` - GSEA enrichment curves
+`EnrichMap()`, `EnrichNetwork()`, `GSEASummaryPlot()`, `GSEAPlot()`
 
-### Single-Cell & Spatial
+### Single-Cell & Spatial Analysis
 
-- `DimPlot()` - Dimensionality reduction (UMAP/t-SNE/PCA)
-- `FeatureDimPlot()` - Feature expression on reduced dimensions
-- `VelocityPlot()` - RNA velocity visualization
-- `SpatImagePlot()` - Spatial image plots
-- `SpatPointsPlot()` - Spatial points
-- `SpatShapesPlot()` - Spatial shapes
-- `SpatMasksPlot()` - Spatial masks
+`DimPlot()`, `FeatureDimPlot()`, `VelocityPlot()`, `SpatImagePlot()`,
+`SpatPointsPlot()`, `SpatShapesPlot()`, `SpatMasksPlot()`
 
 ### Genomics
 
-- `VolcanoPlot()` - Differential expression volcano plots
-- `ManhattanPlot()` - GWAS Manhattan plots
-- `VennDiagram()` - Venn diagrams
-- `UpsetPlot()` - UpSet plots
+`VolcanoPlot()`, `ManhattanPlot()`, `VennDiagram()`, `UpsetPlot()`
 
 ### Survival & Clinical
 
-- `KMPlot()` - Kaplan-Meier survival curves
-- `ROCCurve()` - ROC curves
+`KMPlot()`, `ROCCurve()`
 
 ### Networks & Relationships
 
-- `CorPlot()` - Correlation matrices
-- `ChordPlot()` - Chord diagrams
-- `SankeyPlot()` - Sankey flow diagrams
-- `Network()` - Network graphs
-- `AlluvialPlot()` - Alluvial diagrams
+`CorPlot()`, `ChordPlot()`, `SankeyPlot()`, `Network()`,
+`AlluvialPlot()`
 
-### Specialized
+### Specialized Plots
 
-- `Heatmap()` - Enhanced heatmaps
-- `RadarPlot()` / `SpiderPlot()` - Radar charts
-- `PieChart()` / `RingPlot()` - Pie and donut charts
-- `WordCloudPlot()` - Word clouds
-- `RarefactionPlot()` - Rarefaction curves
-- `ClustreePlot()` - Cluster hierarchy trees
-- `CircosPlot()` - Circos plots
-- `SplitBarPlot()` - Split bar plots
+`Heatmap()`, `RadarPlot()`, `SpiderPlot()`, `PieChart()`, `RingPlot()`,
+`WordCloudPlot()`, `RarefactionPlot()`, `ClustreePlot()`,
+`CircosPlot()`, `SplitBarPlot()`
 
-## 💡 Design Philosophy
+------------------------------------------------------------------------
 
-ggforge follows several key principles:
+## Design Philosophy
 
-1.  **Consistency**: All functions share a unified API design
-2.  **Simplicity**: Create complex plots with minimal code
-3.  **Flexibility**: Full control over aesthetics when needed
-4.  **Intelligence**: Automatic type detection and optimal defaults
-5.  **Quality**: High-quality output out of the box
+ggforge follows key principles for scientific visualization:
 
-## 📖 Documentation
+1.  **Consistency** - Unified API design across all plotting functions
+2.  **Simplicity** - Create complex visualizations with minimal code
+3.  **Flexibility** - Full control over aesthetics and customization
+4.  **Intelligence** - Automatic type detection and optimal defaults
+5.  **Quality** - Professional output suitable for scientific
+    publications
 
-- **Function Reference**: Run `?FunctionName` in R
-- **Vignettes**: `browseVignettes("ggforge")`
-- **GitHub**: <https://github.com/Zaoqu-Liu/ggforge>
+------------------------------------------------------------------------
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📝 Citation
+## Citation
 
 If you use ggforge in your research, please cite:
 
@@ -641,37 +574,28 @@ If you use ggforge in your research, please cite:
     R package version 1.0.0. https://github.com/Zaoqu-Liu/ggforge
     Modified from plotthis by Panwen Wang. https://github.com/pwwang/plotthis
 
-## 📄 License
+## License
 
-This project is licensed under the GPL-3 License - see the
-[LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the GPL-3 License. See
+[LICENSE.md](LICENSE.md) for details.
 
-## 👨‍🔬 Author
+## Author
 
 **Zaoqu Liu**
 
 - ORCID: [0000-0002-0452-742X](https://orcid.org/0000-0002-0452-742X)
-- GitHub: [@Zaoqu-Liu](https://github.com/Zaoqu-Liu)
 - Email: <liuzaoqu@163.com>
+- Affiliation: Chinese Academy of Medical Sciences and Peking Union
+  Medical College
 
-*MD candidate and PhD student at Chinese Academy of Medical Sciences and
-Peking Union Medical College*
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 This package is greatly inspired by and modified from
 [plotthis](https://github.com/pwwang/plotthis) by Panwen Wang. We are
 deeply grateful for the original work and design philosophy.
 
-Built on the shoulders of giants: -
-[plotthis](https://github.com/pwwang/plotthis) - Original inspiration
-and foundation - [ggplot2](https://ggplot2.tidyverse.org/) - The grammar
-of graphics - [patchwork](https://patchwork.data-imaginist.com/) -
-Multi-panel composition - And many other excellent R packages
-
-------------------------------------------------------------------------
-
-<p align="center">
-
-Made with ❤️ for the biomedical research community
-</p>
+Additional acknowledgments: -
+[ggplot2](https://ggplot2.tidyverse.org/) - The grammar of graphics -
+[patchwork](https://patchwork.data-imaginist.com/) - Multi-panel
+composition - The R community for their excellent packages and
+contributions
