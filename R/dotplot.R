@@ -255,12 +255,21 @@ DotPlotAtomic <- function(
         dplyr::group_by(!!!syms(unique(c(x, y, facet_by)))) |>
         dplyr::summarise(.size = dplyr::n(), .groups = "drop")
     } else {
-      warning("Using the first value of fill_by as size_by is calculated from count of instances.", immediate. = TRUE)
+      # Aggregate data and check if there are duplicates
       data <- data |>
         dplyr::group_by(!!!syms(unique(c(x, y, facet_by)))) |>
         dplyr::summarise(!!sym(fill_by) := dplyr::first(!!sym(fill_by)), .size = dplyr::n(), .groups = "drop")
+
+      # Only warn if there are actually duplicates (count > 1)
+      if (any(data$.size > 1)) {
+        warning("Using the first value of fill_by as size_by is calculated from count of instances.", immediate. = TRUE)
+      }
     }
     size_by <- ".size"
+    # Set default size_name if not provided
+    if (is.null(size_name)) {
+      size_name <- "Count"
+    }
   }
 
   # Handle fill_by

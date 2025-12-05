@@ -72,7 +72,10 @@ Suggests:
     plotROC,
     OptimalCutpoints,
     proxyC,
-    metR
+    metR,
+    survival,
+    future,
+    furrr
 Config/testthat/edition: 3
 LazyData: true
 VignetteBuilder: knitr

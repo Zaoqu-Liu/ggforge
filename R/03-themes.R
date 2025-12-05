@@ -58,9 +58,9 @@ theme_ggforge <- function(
     plot.subtitle = ggplot2::element_text(
       size = 12 * text_size_scale,
       family = font_family,
-      hjust = 0,
+      hjust = 0.5,
       margin = ggplot2::margin(b = 3),
-      colour = "grey30"
+      colour = "black"
     ),
     plot.background = ggplot2::element_rect(fill = "white", color = NA),
     plot.margin = ggplot2::margin(10, 10, 10, 10),
@@ -170,9 +170,9 @@ theme_ggforge_grid <- function(
     plot.subtitle = ggplot2::element_text(
       size = 12 * text_size_scale,
       family = font_family,
-      hjust = 0,
+      hjust = 0.5,
       margin = ggplot2::margin(b = 3),
-      colour = "grey30"
+      colour = "black"
     ),
     plot.background = ggplot2::element_rect(fill = "white", color = NA),
     plot.margin = ggplot2::margin(10, 10, 10, 10),

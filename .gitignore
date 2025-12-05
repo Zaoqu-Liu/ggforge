@@ -6,3 +6,5 @@
 .Ruserdata
 ..Rcheck/
 *.Rcheck/
+.DS_Store
+DEVELOPMENT_GUIDE.md
