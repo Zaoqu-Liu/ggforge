@@ -672,5 +672,6 @@ Multi-panel composition - And many other excellent R packages
 ------------------------------------------------------------------------
 
 <p align="center">
+
 Made with ❤️ for the biomedical research community
 </p>
