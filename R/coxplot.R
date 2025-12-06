@@ -726,13 +726,14 @@ CoxPlotAtomic <- function(
     )
   }
 
-  # Determine text position
-  text_data <- if (coef > 0) {
+  # Determine text position (use first coefficient if multiple)
+  coef_sign <- coef[1]
+  text_data <- if (coef_sign > 0) {
     data.frame(var = min(dd$var), HR.95H = max(dd$HR.95H))
   } else {
     data.frame(var = max(dd$var), HR.95H = max(dd$HR.95H))
   }
-  text_hjust <- if (coef > 0) -0.1 else 1.1
+  text_hjust <- if (coef_sign > 0) -0.1 else 1.1
 
   # Get base size
   base_size <- theme_args$base_size %||% ggforge_option("theme.base_size")
