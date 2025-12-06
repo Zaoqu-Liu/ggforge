@@ -703,8 +703,19 @@ CoxPlotAtomic <- function(
   low <- hr - 2 * aPred$se.fit
 
   # Create result dataframe
+  # Convert var to numeric for plotting (handle both numeric and factor)
+  var_values <- data_clean[[var]]
+  if (is.factor(var_values) || is.character(var_values)) {
+    var_numeric <- as.numeric(as.factor(var_values))
+    var_labels <- levels(as.factor(var_values))
+  } else {
+    var_numeric <- var_values
+    var_labels <- NULL
+  }
+  
   dd <- data.frame(
-    var = data_clean[[var]],
+    var_original = var_values,
+    var = var_numeric,
     HR = hr,
     HR.95H = high,
     HR.95L = low
@@ -758,9 +769,21 @@ CoxPlotAtomic <- function(
       fontface = text_face, color = "black"
     ) +
     ggplot2::labs(x = xlab, y = ylab, title = title) +
-    ggplot2::scale_x_continuous(expand = ggplot2::expansion(c(0, 0))) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(c(0.01, 0.01))) +
     do.call(theme, theme_args)
+  
+  # Add appropriate x scale
+  if (!is.null(var_labels)) {
+    # Factor variable: use discrete scale with labels
+    p <- p + ggplot2::scale_x_continuous(
+      breaks = seq_along(var_labels),
+      labels = var_labels,
+      expand = ggplot2::expansion(c(0, 0))
+    )
+  } else {
+    # Numeric variable: use continuous scale
+    p <- p + ggplot2::scale_x_continuous(expand = ggplot2::expansion(c(0, 0)))
+  }
 
   # Apply styling
   p <- apply_style_theme(

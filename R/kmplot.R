@@ -176,10 +176,10 @@ KMPlotAtomic <- function(
         if (pval >= 1e-4) {
           # Regular format with 4 significant figures for p >= 0.0001
           pval_formatted <- signif(pval, 4)
-          pval_text <- sprintf("p = %g", pval_formatted)
+          pval_text <- sprintf("P = %g", pval_formatted)
         } else {
           # Scientific notation with 2 decimal places for p < 0.0001
-          pval_text <- sprintf("p = %.2e", pval)
+          pval_text <- sprintf("P = %.2e", pval)
         }
       },
       error = function(e) {
