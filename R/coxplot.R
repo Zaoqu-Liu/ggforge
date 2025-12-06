@@ -712,7 +712,7 @@ CoxPlotAtomic <- function(
     var_numeric <- var_values
     var_labels <- NULL
   }
-  
+
   dd <- data.frame(
     var_original = var_values,
     var = var_numeric,
@@ -723,17 +723,20 @@ CoxPlotAtomic <- function(
     dplyr::arrange(.data$var) %>%
     dplyr::mutate(x = 1:length(.data$var))
 
-  # Prepare label text
+  # Prepare label text (use first coefficient if multiple)
+  coef_first <- coef[1]
+  p_val_first <- p_val[1]
+  
   lb <- if (show_cindex) {
     paste0(
-      "HR = ", signif(exp(coef), text_digit), "\n",
-      "P = ", signif(p_val, text_digit), "\n",
+      "HR = ", signif(exp(coef_first), text_digit), "\n",
+      "P = ", signif(p_val_first, text_digit), "\n",
       "C = ", signif(cindex, text_digit)
     )
   } else {
     paste0(
-      "HR = ", signif(exp(coef), text_digit), "\n",
-      "P = ", signif(p_val, text_digit)
+      "HR = ", signif(exp(coef_first), text_digit), "\n",
+      "P = ", signif(p_val_first, text_digit)
     )
   }
 
@@ -771,7 +774,7 @@ CoxPlotAtomic <- function(
     ggplot2::labs(x = xlab, y = ylab, title = title) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(c(0.01, 0.01))) +
     do.call(theme, theme_args)
-  
+
   # Add appropriate x scale
   if (!is.null(var_labels)) {
     # Factor variable: use discrete scale with labels
