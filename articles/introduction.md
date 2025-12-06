@@ -507,7 +507,9 @@ KMPlot(
 
 ### Cox Regression Analysis
 
-Multivariate survival analysis with forest plot:
+Cox proportional hazards model for multivariate survival analysis.
+
+#### Forest Plot
 
 ``` r
 # Create sample data with multiple covariates
@@ -515,6 +517,7 @@ cox_data <- data.frame(
   time = rexp(200, 0.01),
   event = sample(0:1, 200, replace = TRUE, prob = c(0.3, 0.7)),
   age = rnorm(200, 60, 10),
+  bmi = rnorm(200, 25, 4),
   gender = sample(c("Male", "Female"), 200, replace = TRUE),
   stage = sample(c("I", "II", "III", "IV"), 200, replace = TRUE),
   treatment = sample(c("A", "B"), 200, replace = TRUE)
@@ -524,20 +527,45 @@ CoxPlot(
   data = cox_data,
   time = "time",
   event = "event",
-  vars = c("age", "gender", "stage", "treatment"),
+  vars = c("age", "bmi", "gender", "stage", "treatment"),
   plot_type = "forest",
   palette = "nejm",
-  title = "Cox Proportional Hazards Model"
+  title = "Multivariate Cox Regression"
 )
 ```
 
-![](introduction_files/figure-html/coxplot-1.png)
+![](introduction_files/figure-html/coxplot-forest-1.png)
 
-**Key features:**
+**Interpretation:**
 
-- Forest plot showing hazard ratios
-- Confidence intervals for each covariate
-- P-values for statistical significance
+- Points represent hazard ratios (HR)
+- Error bars show 95% confidence intervals
+- Colors indicate risk direction: Red (Risky, HR \> 1), Blue
+  (Protective, HR \< 1), Grey (Not significant)
+- Legend positioned at bottom for easy reading
+
+#### Detailed Forest Plot
+
+``` r
+CoxPlot(
+  data = cox_data,
+  time = "time",
+  event = "event",
+  vars = c("age", "gender", "stage", "treatment"),
+  plot_type = "forest2",
+  palette = "lancet",
+  digits = 2,
+  title = "Cox Analysis with Statistical Details"
+)
+```
+
+![](introduction_files/figure-html/coxplot-forest2-1.png)
+
+**Features:**
+
+- Includes statistical table alongside forest plot
+- HR values with 95% CI displayed
+- P-values for each covariate
 - Automatic handling of categorical and continuous variables
 
 ## Network Visualization

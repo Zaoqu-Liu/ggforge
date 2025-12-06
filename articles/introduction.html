@@ -566,13 +566,18 @@ resolution.</p>
 <div class="section level3">
 <h3 id="cox-regression-analysis">Cox Regression Analysis<a class="anchor" aria-label="anchor" href="#cox-regression-analysis"></a>
 </h3>
-<p>Multivariate survival analysis with forest plot:</p>
+<p>Cox proportional hazards model for multivariate survival
+analysis.</p>
+<div class="section level4">
+<h4 id="forest-plot">Forest Plot<a class="anchor" aria-label="anchor" href="#forest-plot"></a>
+</h4>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create sample data with multiple covariates</span></span>
 <span><span class="va">cox_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">rexp</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">0.01</span><span class="op">)</span>,</span>
 <span>  event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, <span class="fl">200</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">60</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  bmi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">25</span>, <span class="fl">4</span><span class="op">)</span>,</span>
 <span>  gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span>, <span class="fl">200</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  stage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="st">"II"</span>, <span class="st">"III"</span>, <span class="st">"IV"</span><span class="op">)</span>, <span class="fl">200</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  treatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, <span class="fl">200</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -582,19 +587,44 @@ resolution.</p>
 <span>  data <span class="op">=</span> <span class="va">cox_data</span>,</span>
 <span>  time <span class="op">=</span> <span class="st">"time"</span>,</span>
 <span>  event <span class="op">=</span> <span class="st">"event"</span>,</span>
-<span>  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"gender"</span>, <span class="st">"stage"</span>, <span class="st">"treatment"</span><span class="op">)</span>,</span>
+<span>  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"bmi"</span>, <span class="st">"gender"</span>, <span class="st">"stage"</span>, <span class="st">"treatment"</span><span class="op">)</span>,</span>
 <span>  plot_type <span class="op">=</span> <span class="st">"forest"</span>,</span>
 <span>  palette <span class="op">=</span> <span class="st">"nejm"</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"Cox Proportional Hazards Model"</span></span>
+<span>  title <span class="op">=</span> <span class="st">"Multivariate Cox Regression"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction_files/figure-html/coxplot-1.png" class="r-plt" width="1500" style="display: block; margin: auto;"></p>
-<p><strong>Key features:</strong></p>
+<p><img src="introduction_files/figure-html/coxplot-forest-1.png" class="r-plt" width="1350" style="display: block; margin: auto;"></p>
+<p><strong>Interpretation:</strong></p>
 <ul>
-<li>Forest plot showing hazard ratios</li>
-<li>Confidence intervals for each covariate</li>
-<li>P-values for statistical significance</li>
+<li>Points represent hazard ratios (HR)</li>
+<li>Error bars show 95% confidence intervals</li>
+<li>Colors indicate risk direction: Red (Risky, HR &gt; 1), Blue
+(Protective, HR &lt; 1), Grey (Not significant)</li>
+<li>Legend positioned at bottom for easy reading</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="detailed-forest-plot">Detailed Forest Plot<a class="anchor" aria-label="anchor" href="#detailed-forest-plot"></a>
+</h4>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/CoxPlot.html">CoxPlot</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">cox_data</span>,</span>
+<span>  time <span class="op">=</span> <span class="st">"time"</span>,</span>
+<span>  event <span class="op">=</span> <span class="st">"event"</span>,</span>
+<span>  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"gender"</span>, <span class="st">"stage"</span>, <span class="st">"treatment"</span><span class="op">)</span>,</span>
+<span>  plot_type <span class="op">=</span> <span class="st">"forest2"</span>,</span>
+<span>  palette <span class="op">=</span> <span class="st">"lancet"</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Cox Analysis with Statistical Details"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="introduction_files/figure-html/coxplot-forest2-1.png" class="r-plt" width="1650" style="display: block; margin: auto;"></p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Includes statistical table alongside forest plot</li>
+<li>HR values with 95% CI displayed</li>
+<li>P-values for each covariate</li>
 <li>Automatic handling of categorical and continuous variables</li>
 </ul>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -604,7 +634,7 @@ resolution.</p>
 <h3 id="heatmap">Heatmap<a class="anchor" aria-label="anchor" href="#heatmap"></a>
 </h3>
 <p>Enhanced heatmap for matrix data:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create sample matrix</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, <span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span></span>
@@ -622,7 +652,7 @@ resolution.</p>
 <h3 id="chord-diagram">Chord Diagram<a class="anchor" aria-label="anchor" href="#chord-diagram"></a>
 </h3>
 <p>Visualize relationships between categories:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create interaction data</span></span>
 <span><span class="va">chord_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD4 T"</span>, <span class="st">"CD8 T"</span>, <span class="st">"B cell"</span>, <span class="st">"NK"</span>, <span class="st">"Monocyte"</span><span class="op">)</span>,</span>
@@ -644,7 +674,7 @@ resolution.</p>
 <h3 id="venn-diagram">Venn Diagram<a class="anchor" aria-label="anchor" href="#venn-diagram"></a>
 </h3>
 <p>Visualize set overlaps:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create gene sets</span></span>
 <span><span class="va">venn_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  SetA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Gene"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span>,</span>
@@ -664,7 +694,7 @@ resolution.</p>
 <h2 id="color-palettes">Color Palettes<a class="anchor" aria-label="anchor" href="#color-palettes"></a>
 </h2>
 <p>ggforge includes extensive color palettes from multiple sources:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show available palettes</span></span>
 <span><span class="fu"><a href="../reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">palette_list</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15"</span></span>
@@ -691,7 +721,7 @@ JCO)</li>
 <h3 id="multi-panel-layouts">Multi-Panel Layouts<a class="anchor" aria-label="anchor" href="#multi-panel-layouts"></a>
 </h3>
 <p>Create complex multi-panel figures with <code>split_by</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create data with multiple groups</span></span>
 <span><span class="va">multi_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span>
@@ -717,7 +747,7 @@ JCO)</li>
 <h3 id="faceting">Faceting<a class="anchor" aria-label="anchor" href="#faceting"></a>
 </h3>
 <p>Use <code>facet_by</code> for within-plot faceting:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create faceted data</span></span>
 <span><span class="va">facet_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="fl">6</span><span class="op">)</span>,</span>
@@ -741,7 +771,7 @@ JCO)</li>
 <h3 id="theme-customization">Theme Customization<a class="anchor" aria-label="anchor" href="#theme-customization"></a>
 </h3>
 <p>All plots support theme customization:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Apply different themes</span></span>
 <span><span class="fu"><a href="../reference/BoxPlot.html">BoxPlot</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">box_data</span>,</span>
@@ -766,7 +796,7 @@ JCO)</li>
 <li>One column per variable</li>
 <li>Each value in its own cell</li>
 </ul>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Good: Tidy format</span></span>
 <span><span class="va">data_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S1"</span>, <span class="st">"S2"</span>, <span class="st">"S3"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
@@ -805,7 +835,7 @@ requirements</li>
 <h3 id="high-resolution-export">High-Resolution Export<a class="anchor" aria-label="anchor" href="#high-resolution-export"></a>
 </h3>
 <p><strong>Recommended settings for saving figures:</strong></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># High-resolution PDF</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span></span>
 <span>  <span class="st">"figure.pdf"</span>,</span>
@@ -831,7 +861,7 @@ requirements</li>
 <h3 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
 </h3>
 <p><strong>Always set seed for reproducible results:</strong></p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">8525</span><span class="op">)</span> <span class="co"># ggforge default seed</span></span></code></pre></div>
 </div>
 </div>
@@ -844,14 +874,14 @@ requirements</li>
 <div class="section level4">
 <h4 id="issue-1-column-not-found">Issue 1: Column not found<a class="anchor" aria-label="anchor" href="#issue-1-column-not-found"></a>
 </h4>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check column names (case-sensitive)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">your_data</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="issue-2-palette-not-working">Issue 2: Palette not working<a class="anchor" aria-label="anchor" href="#issue-2-palette-not-working"></a>
 </h4>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># See available palettes</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">palette_list</span><span class="op">)</span></span>
 <span></span>
@@ -861,7 +891,7 @@ requirements</li>
 <div class="section level4">
 <h4 id="issue-3-legend-position">Issue 3: Legend position<a class="anchor" aria-label="anchor" href="#issue-3-legend-position"></a>
 </h4>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Control legend</span></span>
 <span><span class="fu">YourPlot</span><span class="op">(</span><span class="va">...</span>, theme_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -900,7 +930,7 @@ packages</p>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; R version 4.5.2 (2025-10-31)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>

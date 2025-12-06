@@ -394,7 +394,7 @@ KMPlot(
 
 ![](reference/figures/README-kmplot-1.png)
 
-**Cox Regression Analysis**
+**Cox Regression - Forest Plot**
 
 ``` r
 # Create sample data with multiple covariates
@@ -402,6 +402,7 @@ cox_data <- data.frame(
   time = rexp(200, 0.01),
   event = sample(0:1, 200, replace = TRUE, prob = c(0.3, 0.7)),
   age = rnorm(200, 60, 10),
+  bmi = rnorm(200, 25, 4),
   gender = sample(c("Male", "Female"), 200, replace = TRUE),
   stage = sample(c("I", "II", "III", "IV"), 200, replace = TRUE),
   treatment = sample(c("A", "B"), 200, replace = TRUE)
@@ -411,14 +412,31 @@ CoxPlot(
   data = cox_data,
   time = "time",
   event = "event",
-  vars = c("age", "gender", "stage", "treatment"),
+  vars = c("age", "bmi", "gender", "stage", "treatment"),
   plot_type = "forest",
   palette = "nejm",
-  title = "Cox Proportional Hazards Model"
+  title = "Multivariate Cox Regression - Forest Plot"
 )
 ```
 
-![](reference/figures/README-coxplot-1.png)
+![](reference/figures/README-coxplot-forest-1.png)
+
+**Cox Regression - Detailed Forest Plot**
+
+``` r
+CoxPlot(
+  data = cox_data,
+  time = "time",
+  event = "event",
+  vars = c("age", "gender", "stage", "treatment"),
+  plot_type = "forest2",
+  palette = "lancet",
+  digits = 2,
+  title = "Cox Regression with Statistical Table"
+)
+```
+
+![](reference/figures/README-coxplot-forest2-1.png)
 
 ------------------------------------------------------------------------
 
@@ -523,7 +541,7 @@ LinePlot(
 
 ## Key Features
 
-- **41+ plotting functions** covering comprehensive biomedical
+- **41 plotting functions** covering comprehensive biomedical
   visualization needs
 - **Unified API design** with consistent interface across all functions
 - **Intelligent type detection** for automatic variable styling
@@ -578,9 +596,12 @@ LinePlot(
 
 ### Survival & Clinical
 
-[`KMPlot()`](https://zaoqu-liu.github.io/ggforge/reference/KMPlot.md),
-[`CoxPlot()`](https://zaoqu-liu.github.io/ggforge/reference/CoxPlot.md),
-[`ROCCurve()`](https://zaoqu-liu.github.io/ggforge/reference/ROCCurve.md)
+[`KMPlot()`](https://zaoqu-liu.github.io/ggforge/reference/KMPlot.md) -
+Kaplan-Meier curves,
+[`CoxPlot()`](https://zaoqu-liu.github.io/ggforge/reference/CoxPlot.md) -
+Cox regression analysis,
+[`ROCCurve()`](https://zaoqu-liu.github.io/ggforge/reference/ROCCurve.md) -
+ROC curves
 
 ### Networks & Relationships
 
