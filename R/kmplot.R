@@ -24,7 +24,7 @@ KMPlotAtomic <- function(
     show_pval = TRUE,
     pval_method = "logrank",
     pval_digits = 4,
-    pval_size = 4.5,
+    pval_size = 4,
     pval_coord = c(0.05, 0.1),
     show_conf_int = FALSE,
     conf_alpha = 0.2,
@@ -171,10 +171,15 @@ KMPlotAtomic <- function(
       {
         sdiff <- survival::survdiff(as.formula(formula_str), data = data)
         pval <- 1 - stats::pchisq(sdiff$chisq, length(sdiff$n) - 1)
-        if (pval < 10^(-pval_digits)) {
-          pval_text <- sprintf("p < %s", format(10^(-pval_digits), scientific = FALSE))
+
+        # Smart p-value formatting
+        if (pval >= 1e-4) {
+          # Regular format with 4 significant figures for p >= 0.0001
+          pval_formatted <- signif(pval, 4)
+          pval_text <- sprintf("p = %g", pval_formatted)
         } else {
-          pval_text <- sprintf("p = %s", format(pval, digits = pval_digits, scientific = FALSE))
+          # Scientific notation with 2 decimal places for p < 0.0001
+          pval_text <- sprintf("p = %.2e", pval)
         }
       },
       error = function(e) {
@@ -249,16 +254,36 @@ KMPlotAtomic <- function(
     }
   }
 
-  # Add p-value annotation
+  # Add p-value annotation with background (mimicking corplot.R style)
   if (!is.null(pval_text)) {
-    p <- p + ggplot2::annotate(
-      "text",
-      label = pval_text,
+    # Combine method and p-value with newline
+    label_text <- paste0("Log-rank\n", pval_text)
+
+    # Create annotation data frame
+    pval_df <- data.frame(
       x = x_max * pval_coord[1],
       y = pval_coord[2],
+      label = label_text,
+      stringsAsFactors = FALSE
+    )
+
+    # Add combined label with background using ggrepel (exactly like corplot.R)
+    p <- p + ggrepel::geom_text_repel(
+      data = pval_df,
+      aes(x = .data$x, y = .data$y, label = .data$label),
       hjust = 0,
       vjust = 0,
-      size = pval_size
+      size = pval_size,
+      color = "black",
+      bg.color = "white",
+      bg.r = 0.1,
+      min.segment.length = Inf,
+      max.overlaps = 100,
+      force = 0,
+      box.padding = 0,
+      point.padding = 0,
+      segment.color = "transparent",
+      inherit.aes = FALSE
     )
   }
 
@@ -553,7 +578,7 @@ KMPlot <- function(
     show_pval = TRUE,
     pval_method = "logrank",
     pval_digits = 4,
-    pval_size = 4.5,
+    pval_size = 4,
     pval_coord = c(0.05, 0.1),
     show_conf_int = FALSE,
     conf_alpha = 0.2,
