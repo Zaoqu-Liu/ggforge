@@ -438,11 +438,27 @@ CoxPlotAtomic <- function(
   data_copy <- data %>%
     dplyr::rename(time = !!time, event = !!event)
 
-  # Filter variables by expression ratio (optimized with colMeans)
+  # Filter variables by expression ratio (only for numeric variables)
   vardata <- data_copy[, vars, drop = FALSE]
-  ind <- colMeans(vardata == 0, na.rm = TRUE) <= nonExpression_ratio
-  vars <- names(vardata)[ind]
-
+  
+  # Identify numeric columns for filtering and scaling
+  numeric_vars <- sapply(vardata, is.numeric)
+  
+  if (any(numeric_vars)) {
+    # Filter numeric variables by expression ratio
+    numeric_data <- vardata[, numeric_vars, drop = FALSE]
+    ind_numeric <- colMeans(numeric_data == 0, na.rm = TRUE) <= nonExpression_ratio
+    vars_keep_numeric <- names(numeric_data)[ind_numeric]
+  } else {
+    vars_keep_numeric <- character(0)
+  }
+  
+  # Keep all non-numeric variables (factors, characters)
+  vars_keep_nonnumeric <- names(vardata)[!numeric_vars]
+  
+  # Combined filtered variables
+  vars <- c(vars_keep_numeric, vars_keep_nonnumeric)
+  
   if (length(vars) == 0) {
     stop("No variables passed filtering threshold (nonExpression_ratio = ",
       nonExpression_ratio, ")",
@@ -450,9 +466,9 @@ CoxPlotAtomic <- function(
     )
   }
 
-  # Scale variables if requested
-  if (scale) {
-    data_copy[, vars] <- scale(data_copy[, vars])
+  # Scale only numeric variables if requested
+  if (scale && length(vars_keep_numeric) > 0) {
+    data_copy[, vars_keep_numeric] <- scale(data_copy[, vars_keep_numeric, drop = FALSE])
   }
 
   # Define function to fit Cox model
