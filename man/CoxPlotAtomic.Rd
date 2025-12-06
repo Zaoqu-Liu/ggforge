@@ -51,8 +51,8 @@ CoxPlotAtomic(
   subtitle = NULL,
   xlab = NULL,
   ylab = NULL,
-  legend.position = "right",
-  legend.direction = "vertical",
+  legend.position = "bottom",
+  legend.direction = "horizontal",
   seed = 8525,
   ...
 )

@@ -137,8 +137,8 @@ CoxPlot <- function(
     subtitle = NULL,
     xlab = NULL,
     ylab = NULL,
-    legend.position = "right",
-    legend.direction = "vertical",
+    legend.position = "bottom",
+    legend.direction = "horizontal",
     combine = TRUE,
     nrow = NULL,
     ncol = NULL,
@@ -279,8 +279,8 @@ CoxPlotAtomic <- function(
     subtitle = NULL,
     xlab = NULL,
     ylab = NULL,
-    legend.position = "right",
-    legend.direction = "vertical",
+    legend.position = "bottom",
+    legend.direction = "horizontal",
     seed = 8525,
     ...) {
   # Get ggplot function
