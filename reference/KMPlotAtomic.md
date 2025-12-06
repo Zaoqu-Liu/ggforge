@@ -16,7 +16,7 @@ KMPlotAtomic(
   show_pval = TRUE,
   pval_method = "logrank",
   pval_digits = 4,
-  pval_size = 4.5,
+  pval_size = 4,
   pval_coord = c(0.05, 0.1),
   show_conf_int = FALSE,
   conf_alpha = 0.2,
